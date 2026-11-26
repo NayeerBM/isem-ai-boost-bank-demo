@@ -12,6 +12,7 @@ import {
 import ChartCard from "./ChartCard";
 import ChartFilterPopover from "./ChartFilterPopover";
 import ChartTooltip from "./ChartTooltip";
+import SortIcon from "./SortIcon";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import {
   DURATION_SUMMARY,
@@ -57,7 +58,14 @@ export default function SummaryBarChart({ title, metric, globalFilter }) {
     <ChartCard
       title={title}
       subtitle={DURATION_SUMMARY[appliedFilter.duration]}
-      badge={SORT_BADGE[appliedFilter.sort]}
+      badge={
+        SORT_BADGE[appliedFilter.sort] && (
+          <>
+            <SortIcon sort={appliedFilter.sort} />
+            {SORT_BADGE[appliedFilter.sort]}
+          </>
+        )
+      }
       filter={
         <ChartFilterPopover
           value={appliedFilter}

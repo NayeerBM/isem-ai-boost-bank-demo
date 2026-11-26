@@ -124,6 +124,35 @@
     }
   }
 
+  &-field .ant-select-dropdown {
+    padding: var(--space-1);
+    border-radius: var(--radius-control);
+  }
+
+  &-field .ant-select-item {
+    border-radius: var(--radius-chip);
+    color: var(--color-text);
+    font-size: var(--font-size-body);
+  }
+
+  &-field
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  &-option {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    .anticon {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-title);
+    }
+  }
+
   &-select-lg.ant-select {
     font-size: var(--font-size-title);
   }

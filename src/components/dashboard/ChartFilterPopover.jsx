@@ -10,11 +10,22 @@ import {
   SORT_OPTIONS,
   YEAR_OPTIONS,
 } from "../../pages/boardOverviewData";
+import SortIcon from "./SortIcon";
 import "./ChartFilterPopover.scss";
 
 const YEAR_SELECT_OPTIONS = YEAR_OPTIONS.map((year) => ({
   label: String(year),
   value: year,
+}));
+
+const SORT_SELECT_OPTIONS = SORT_OPTIONS.map((option) => ({
+  value: option.value,
+  label: (
+    <span className="chart-filter-option">
+      <SortIcon sort={option.value} />
+      {option.label}
+    </span>
+  ),
 }));
 
 const STATISTICS_LABEL = {
@@ -124,7 +135,7 @@ export default function ChartFilterPopover({
           <FilterSelect
             label="Sort"
             value={draft.sort}
-            options={SORT_OPTIONS}
+            options={SORT_SELECT_OPTIONS}
             onChange={(sort) => update({ sort })}
           />
         )}
