@@ -1,0 +1,292 @@
+import moment from "moment";
+import { seededNumber } from "../utils/seededRandom";
+import { formatRM } from "../utils/formatValue";
+
+export const CURRENT_YEAR = moment().year();
+
+export const YEAR_OPTIONS = Array.from(
+  { length: 5 },
+  (_, index) => CURRENT_YEAR - index,
+);
+
+export const QUARTER_OPTIONS = [1, 2, 3, 4];
+
+export const MONTH_OPTIONS = moment
+  .months()
+  .map((name, index) => ({ label: name, value: index }));
+
+export const DURATION_OPTIONS = [
+  { label: "Quarterly", value: "quarterly" },
+  { label: "Yearly", value: "yearly" },
+  { label: "Monthly", value: "monthly" },
+  { label: "Weekly", value: "weekly" },
+  { label: "Daily", value: "daily" },
+];
+
+export const SORT_OPTIONS = [
+  { label: "Default (by period)", value: "default" },
+  { label: "Highest to lowest", value: "desc" },
+  { label: "Lowest to highest", value: "asc" },
+];
+
+export const SORT_BADGE = {
+  desc: "Highest first",
+  asc: "Lowest first",
+};
+
+export const DURATION_SUMMARY = {
+  quarterly: "Quarterly Summary",
+  yearly: "Yearly Summary",
+  monthly: "Monthly Summary",
+  weekly: "Weekly Summary",
+  daily: "Daily Summary",
+};
+
+const AXIS_FLOOR = {
+  quarterly: 100,
+  yearly: 4,
+  monthly: 4,
+  weekly: 4,
+  daily: 4,
+};
+
+export const DEFAULT_GLOBAL_FILTER = { year: CURRENT_YEAR, quarter: null };
+
+export function defaultChartFilter(globalFilter) {
+  return {
+    duration: "quarterly",
+    year: globalFilter.year,
+    month: moment().month(),
+    sort: "default",
+  };
+}
+
+export function withGlobalYear(filter, globalFilter) {
+  return filter.duration === "quarterly"
+    ? { ...filter, year: globalFilter.year }
+    : filter;
+}
+
+function buildPoint(key, label, min, max, highlighted = false) {
+  const fraudLoss = seededNumber(`loss-${key}`, min, max);
+  const extra = seededNumber(
+    `prevented-${key}`,
+    2,
+    Math.max(4, Math.round(max * 0.35)),
+  );
+  const fraudPrevented = Math.min(
+    max + Math.round(max * 0.2),
+    fraudLoss + extra,
+  );
+  return { key, label, fraudLoss, fraudPrevented, highlighted };
+}
+
+function quarterOfMonth(month) {
+  return Math.floor(month / 3) + 1;
+}
+
+function weeksInMonth(year, month) {
+  const start = moment({ year, month, day: 1 });
+  return Math.ceil((start.daysInMonth() + start.isoWeekday() - 1) / 7);
+}
+
+export function buildSeries(filter, globalFilter) {
+  const { year: globalYear, quarter } = globalFilter;
+
+  if (filter.duration === "yearly") {
+    return [...YEAR_OPTIONS]
+      .reverse()
+      .map((year) =>
+        buildPoint(`Y${year}`, String(year), 60, 260, year === globalYear),
+      );
+  }
+
+  if (filter.duration === "monthly") {
+    return MONTH_OPTIONS.map(({ value }) =>
+      buildPoint(
+        `${filter.year}-M${value}`,
+        moment().month(value).format("MMM"),
+        6,
+        32,
+        filter.year === globalYear &&
+          quarter !== null &&
+          quarterOfMonth(value) === quarter,
+      ),
+    );
+  }
+
+  if (filter.duration === "weekly") {
+    return Array.from(
+      { length: weeksInMonth(filter.year, filter.month) },
+      (_, index) =>
+        buildPoint(
+          `${filter.year}-M${filter.month}-W${index + 1}`,
+          `W${index + 1}`,
+          1,
+          12,
+        ),
+    );
+  }
+
+  if (filter.duration === "daily") {
+    const today = moment().startOf("day");
+    return Array.from({ length: 14 }, (_, index) => {
+      const day = today.clone().subtract(13 - index, "days");
+      return buildPoint(
+        `D${day.format("YYYY-MM-DD")}`,
+        day.format("DD MMM"),
+        0,
+        6,
+      );
+    });
+  }
+
+  return QUARTER_OPTIONS.map((q) =>
+    buildPoint(`${globalYear}-Q${q}`, `Q${q}`, 22, 70, quarter === q),
+  );
+}
+
+export function sortSeries(series, metric, sort) {
+  if (sort === "default") return series;
+  const direction = sort === "desc" ? -1 : 1;
+  return [...series].sort((a, b) => (a[metric] - b[metric]) * direction);
+}
+
+export function buildAxis(maxValue, duration) {
+  const raw = Math.max(maxValue, AXIS_FLOOR[duration]);
+  const magnitude = 10 ** Math.floor(Math.log10(raw));
+  const steps = [1, 1.2, 1.6, 2, 2.4, 3, 4, 5, 6, 8, 10];
+  const step = steps.find((s) => s * magnitude >= raw) ?? 10;
+  const max = step * magnitude;
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map(
+    (ratio) => Math.round(max * ratio * 100) / 100,
+  );
+  return { max, ticks };
+}
+
+function kpisForQuarter(year, quarter) {
+  const seed = `${year}-Q${quarter}`;
+  return {
+    fraudLossesAmount: seededNumber(`amount-${seed}`, 18, 48) * 1000,
+    residualAmlRisk: seededNumber(`aml-risk-${seed}`, 12, 40),
+    fraudPrevented: seededNumber(`prevented-${seed}`, 40, 110),
+    amlBreach: seededNumber(`aml-breach-${seed}`, 2, 12),
+    fraudBreach: seededNumber(`fraud-breach-${seed}`, 3, 13),
+    incidents: seededNumber(`incidents-${seed}`, 2, 9),
+    strReported: seededNumber(`str-${seed}`, 12, 38),
+  };
+}
+
+function kpisForYear(year) {
+  return QUARTER_OPTIONS.map((q) => kpisForQuarter(year, q)).reduce(
+    (total, current) =>
+      Object.fromEntries(
+        Object.keys(total).map((key) => [key, total[key] + current[key]]),
+      ),
+  );
+}
+
+function previousPeriodKpis(year, quarter) {
+  if (!quarter) return kpisForYear(year - 1);
+  return quarter === 1
+    ? kpisForQuarter(year - 1, 4)
+    : kpisForQuarter(year, quarter - 1);
+}
+
+export function buildKpis({ year, quarter }) {
+  const current = quarter ? kpisForQuarter(year, quarter) : kpisForYear(year);
+  const previous = previousPeriodKpis(year, quarter);
+  const lossChange =
+    (current.fraudLossesAmount - previous.fraudLossesAmount) /
+    previous.fraudLossesAmount;
+
+  return {
+    ...current,
+    fraudLossesChangePct: Math.round(lossChange * 100),
+    incidentsChange: current.incidents - previous.incidents,
+  };
+}
+
+export function buildKpiCards(kpis) {
+  return [
+    {
+      key: "aml-risk",
+      value: kpis.residualAmlRisk,
+      description: "Residual AML Risk",
+    },
+    {
+      key: "prevented",
+      value: kpis.fraudPrevented,
+      label: "prevented",
+      description: "Fraud Prevented",
+    },
+    {
+      key: "aml-breach",
+      value: kpis.amlBreach,
+      label: "AML breach",
+      description: "High-risk customers\nwith generated red flags",
+    },
+    {
+      key: "fraud-breach",
+      value: kpis.fraudBreach,
+      label: "Fraud breach",
+      description: "High-risk customers\nwith generated red flags",
+    },
+    {
+      key: "incidents",
+      value: kpis.incidents,
+      label: "incidents",
+      description: "Unresolved Fraud\nIncidents",
+      change: kpis.incidentsChange,
+    },
+    {
+      key: "reports",
+      value: kpis.strReported,
+      label: "reports",
+      description: "STR Reported",
+    },
+  ];
+}
+
+function chipTone(status) {
+  return status.startsWith("Within") ? "success" : "danger";
+}
+
+export function buildAppetite({ year, quarter }, kpis) {
+  const periods = quarter ? 1 : 4;
+  const seed = `${year}-${quarter ?? "all"}`;
+
+  const lossLimit = 30000 * periods;
+  let lossStatus = "Within Tolerance";
+  if (kpis.fraudLossesAmount > lossLimit * 1.2) lossStatus = "Critical";
+  else if (kpis.fraudLossesAmount > lossLimit) lossStatus = "Breach";
+
+  const overdue = seededNumber(`overdue-${seed}`, 20, 120) * periods;
+  const overdueStatus = overdue > 60 * periods ? "Breach" : "Within Tolerance";
+
+  const strTimeline = seededNumber(`str-timeline-${seed}`, 84, 100);
+  let strStatus = "Critical";
+  if (strTimeline >= 95) strStatus = "Within Timeline";
+  else if (strTimeline >= 90) strStatus = "Breach";
+
+  return [
+    {
+      key: "losses",
+      title: "Fraud Losses",
+      value: formatRM(kpis.fraudLossesAmount, 3),
+      status: lossStatus,
+    },
+    {
+      key: "overdue",
+      title: "Overdue Fraud Cases",
+      value: String(overdue),
+      status: overdueStatus,
+    },
+    {
+      key: "str",
+      title: "STR Timeline",
+      value: `${strTimeline}%`,
+      status: strStatus,
+    },
+  ].map((item) => ({ ...item, tone: chipTone(item.status) }));
+}

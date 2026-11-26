@@ -1,0 +1,21 @@
+.trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.4px;
+
+  img {
+    margin: var(--space-1) 0;
+  }
+
+  &-up {
+    color: var(--color-danger);
+  }
+
+  &-down {
+    color: var(--color-success);
+  }
+}

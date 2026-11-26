@@ -1,54 +1,39 @@
-# React + TypeScript + Vite
+# iSEM.ai Board Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dashboard > Board Overview content area from the iSEM.ai V2.0 Figma file, built with React, Ant Design 4, Recharts, Moment and Sass. All numbers are dummy data generated per filter.
 
-Currently, two official plugins are available:
+## Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Scripts
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+| Command           | Purpose                      |
+| ----------------- | ---------------------------- |
+| `npm run dev`     | Start the dev server         |
+| `npm run build`   | Build for production         |
+| `npm run lint`    | Run ESLint                   |
+| `npm run preview` | Preview the production build |
+
+## Structure
+
 ```
+src/
+  pages/BoardOverviewPage.jsx    page layout and global Quarter/Year filter
+  pages/boardOverviewData.js     dummy data, filter options and builders
+  components/dashboard/          overview, charts, filter popover, risk appetite
+  hooks/                         element width, reduced motion
+  utils/                         seeded random numbers, currency format
+  styles/_breakpoints.scss       Sass breakpoints
+  index.scss                     design tokens and shared classes
+```
+
+## Filters
+
+- Overview: Filter Quarter (Q1–Q4 or All Quarters) and Filter Year update the KPI cards, the risk appetite status and highlight the selected quarter in the bar charts.
+- Each chart has a filter popover: Duration (Quarterly, Yearly, Monthly, Weekly, Daily) with Year and Month where relevant. The bar charts also sort by value.

@@ -1,0 +1,24 @@
+@use "../styles/breakpoints" as bp;
+
+.page {
+  padding: var(--space-5);
+}
+
+.board-overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 1158px;
+  margin: 0 auto;
+
+  &-charts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+
+    @media (max-width: bp.$tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
