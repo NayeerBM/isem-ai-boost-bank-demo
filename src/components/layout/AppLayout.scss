@@ -15,4 +15,10 @@
     flex: 1;
     min-width: 0;
   }
+
+  &-breadcrumb {
+    max-width: calc(1158px + 2 * var(--space-5));
+    margin: 0 auto;
+    padding: var(--space-5) var(--space-5) 0;
+  }
 }

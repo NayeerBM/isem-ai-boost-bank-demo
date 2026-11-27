@@ -32,7 +32,7 @@ Switch pages from the sidebar (Dashboard group) or by URL. The header shows only
 ```
 src/
   App.jsx                          hash routes for the two pages, wrapped in the layout
-  components/layout/               header (logo), sidebar (Dashboard group) and page layout
+  components/layout/               header (logo), sidebar (Dashboard group), breadcrumb and page layout
   pages/BoardOverviewPage.jsx      Board page layout and global Quarter/Year filter
   pages/boardOverviewData.js       Board dummy data, shared filter options and period builder
   pages/CommitteeOverviewPage.jsx  Committee page layout, filters and CSV export
