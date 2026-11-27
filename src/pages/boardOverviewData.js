@@ -225,47 +225,36 @@ export function buildKpiCards(kpis) {
   ];
 }
 
-function chipTone(status) {
-  return status.startsWith("Within") ? "success" : "danger";
-}
-
+// Statuses follow the Figma design for now: one fixed tag per card.
 export function buildAppetite({ year, quarter }, kpis) {
   const periods = quarter ? 1 : 4;
   const seed = `${year}-${quarter ?? "all"}`;
-
-  const lossLimit = 30000 * periods;
-  let lossStatus = "Within Tolerance";
-  if (kpis.fraudLossesAmount > lossLimit * 1.2) lossStatus = "Critical";
-  else if (kpis.fraudLossesAmount > lossLimit) lossStatus = "Breach";
-
   const overdue = seededNumber(`overdue-${seed}`, 20, 120) * periods;
-  const overdueStatus = overdue > 60 * periods ? "Breach" : "Within Tolerance";
-
-  const strTimeline = seededNumber(`str-timeline-${seed}`, 84, 100);
-  let strStatus = "Critical";
-  if (strTimeline >= 95) strStatus = "Within Timeline";
-  else if (strTimeline >= 90) strStatus = "Breach";
+  const strTimeline = seededNumber(`str-timeline-${seed}`, 95, 100);
 
   return [
     {
       key: "losses",
       title: "Fraud Losses",
       value: formatRM(kpis.fraudLossesAmount, 3),
-      status: lossStatus,
+      status: "Critical",
+      tone: "danger",
     },
     {
       key: "overdue",
       title: "Overdue Fraud Cases",
       value: String(overdue),
-      status: overdueStatus,
+      status: "Breach",
+      tone: "danger",
     },
     {
       key: "str",
       title: "STR Timeline",
       value: `${strTimeline}%`,
-      status: strStatus,
+      status: "Within Timeline",
+      tone: "success",
     },
-  ].map((item) => ({ ...item, tone: chipTone(item.status) }));
+  ];
 }
 
 export function describeGlobalFilter({ year, quarter }) {
