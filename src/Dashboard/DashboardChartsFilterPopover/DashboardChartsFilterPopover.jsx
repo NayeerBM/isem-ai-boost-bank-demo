@@ -7,15 +7,10 @@ import chevronDown from "../../assets/icons/chevron-down.svg";
 import {
   DURATION_OPTIONS,
   MONTH_OPTIONS,
-  YEAR_OPTIONS,
+  YEAR_SELECT_OPTIONS,
 } from "./dashboardChartPeriods";
 import pillChevronDown from "../../assets/icons/chevron-down-light.svg";
 import "./DashboardChartsFilterPopover.scss";
-
-const YEAR_SELECT_OPTIONS = YEAR_OPTIONS.map((year) => ({
-  label: String(year),
-  value: year,
-}));
 
 const STATISTICS_LABEL = {
   monthly: "Set Monthly Statistics",

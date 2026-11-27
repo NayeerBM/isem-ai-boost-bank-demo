@@ -51,7 +51,7 @@ function Sidebar({ routes, currentPath }) {
   );
 }
 
-export default function DashboardLayout({ routes, currentPath, children }) {
+export default function AppLayout({ routes, currentPath, children }) {
   const current = routes.find((route) => route.path === currentPath);
 
   return (

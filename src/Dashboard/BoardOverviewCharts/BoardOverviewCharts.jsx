@@ -13,8 +13,8 @@ import {
   buildSeries,
 } from "./boardOverviewChartsData";
 import {
-  QUARTER_OPTIONS,
-  YEAR_OPTIONS,
+  QUARTER_SELECT_OPTIONS,
+  YEAR_SELECT_OPTIONS,
   DURATION_SUMMARY,
   buildAxis,
   DEFAULT_GLOBAL_FILTER,
@@ -120,16 +120,6 @@ function TrendBadge({ value, suffix = "" }) {
   );
 }
 
-const QUARTER_PILL_OPTIONS = QUARTER_OPTIONS.map((quarter) => ({
-  label: `Q${quarter}`,
-  value: quarter,
-}));
-
-const YEAR_PILL_OPTIONS = YEAR_OPTIONS.map((year) => ({
-  label: String(year),
-  value: year,
-}));
-
 function OverviewSection({ filter, kpis, onFilterChange }) {
   return (
     <section className="card overview">
@@ -141,14 +131,14 @@ function OverviewSection({ filter, kpis, onFilterChange }) {
             placeholder="Filter Quarter"
             clearLabel="All Quarters"
             value={filter.quarter}
-            options={QUARTER_PILL_OPTIONS}
+            options={QUARTER_SELECT_OPTIONS}
             onChange={(quarter) => onFilterChange({ ...filter, quarter })}
           />
           <FilterPill
             icon={calendarIcon}
             placeholder="Filter Year"
             value={filter.year}
-            options={YEAR_PILL_OPTIONS}
+            options={YEAR_SELECT_OPTIONS}
             onChange={(year) =>
               onFilterChange({ ...filter, year: year ?? filter.year })
             }

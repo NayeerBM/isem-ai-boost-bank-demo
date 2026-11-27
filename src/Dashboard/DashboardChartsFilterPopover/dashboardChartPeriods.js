@@ -1,13 +1,23 @@
 import moment from "moment";
 
-export const CURRENT_YEAR = moment().year();
+const CURRENT_YEAR = moment().year();
 
-export const YEAR_OPTIONS = Array.from(
+const YEAR_OPTIONS = Array.from(
   { length: 5 },
   (_, index) => CURRENT_YEAR - index,
 );
 
 export const QUARTER_OPTIONS = [1, 2, 3, 4];
+
+export const QUARTER_SELECT_OPTIONS = QUARTER_OPTIONS.map((quarter) => ({
+  label: `Q${quarter}`,
+  value: quarter,
+}));
+
+export const YEAR_SELECT_OPTIONS = YEAR_OPTIONS.map((year) => ({
+  label: String(year),
+  value: year,
+}));
 
 export const MONTH_OPTIONS = moment
   .months()
@@ -54,7 +64,7 @@ function quarterOfMonth(month) {
   return Math.floor(month / 3) + 1;
 }
 
-export function weeksInMonth(year, month) {
+function weeksInMonth(year, month) {
   const start = moment({ year, month, day: 1 });
   return Math.ceil((start.daysInMonth() + start.isoWeekday() - 1) / 7);
 }

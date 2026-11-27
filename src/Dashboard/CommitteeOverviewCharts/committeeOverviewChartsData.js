@@ -8,12 +8,7 @@ import {
   describeGlobalFilter,
 } from "../DashboardChartsFilterPopover/dashboardChartPeriods";
 
-export {
-  DEFAULT_GLOBAL_FILTER,
-  withGlobalYear,
-} from "../DashboardChartsFilterPopover/dashboardChartPeriods";
-
-export const KPI_GROUPS = [
+const KPI_GROUPS = [
   {
     key: "transaction",
     caption: "AML Transaction Monitoring",
@@ -69,7 +64,7 @@ export const KPI_GROUPS = [
   },
 ];
 
-export const STR_METRIC = {
+const STR_METRIC = {
   key: "strReported",
   label: "reports",
   caption: "STR Reported",
@@ -181,7 +176,7 @@ const PERIOD_SCALE = {
   year: 12,
 };
 
-export function describePeriod(filter, globalFilter) {
+function describePeriod(filter, globalFilter) {
   const { year, quarter } = globalFilter;
   const month = moment().month();
 
@@ -223,7 +218,7 @@ function scaledValue(seed, period, [min, max]) {
   );
 }
 
-export const BACKLOG_BUCKETS = [
+const BACKLOG_BUCKETS = [
   { key: "le7", label: "≤ 7 Days", color: "#09285f" },
   { key: "8to14", label: "8-14 Days", color: "#264886" },
   { key: "15to21", label: "15-21 Days", color: "#8eabe0" },
@@ -244,7 +239,7 @@ export function buildBacklog(filter, globalFilter) {
   return { period, data, axis };
 }
 
-export const RULE_COLORS = [
+const RULE_COLORS = [
   "#09285f",
   "#203d71",
   "#264886",
@@ -257,7 +252,7 @@ export const RULE_COLORS = [
   "#d5e4ff",
 ];
 
-export const RULES = [
+const RULES = [
   "Rapid movement of funds in and out of account",
   "Structuring below reporting threshold",
   "High-risk jurisdiction transfer",

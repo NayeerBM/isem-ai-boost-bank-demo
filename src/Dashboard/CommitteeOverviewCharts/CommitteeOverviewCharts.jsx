@@ -7,10 +7,12 @@ import plusIcon from "../../assets/icons/plus-circle-dotted.svg";
 import shieldIcon from "../../assets/icons/shield-alert.svg";
 import clockIcon from "../../assets/icons/clock-alert.svg";
 import {
-  QUARTER_OPTIONS,
-  YEAR_OPTIONS,
+  QUARTER_SELECT_OPTIONS,
+  YEAR_SELECT_OPTIONS,
+  DEFAULT_GLOBAL_FILTER,
   defaultChartFilter,
   exportFileName,
+  withGlobalYear,
 } from "../DashboardChartsFilterPopover/dashboardChartPeriods";
 import {
   CartesianGrid,
@@ -31,7 +33,6 @@ import { useElementWidth } from "../../hooks/useElementWidth";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import {
   INFLOW_SERIES,
-  DEFAULT_GLOBAL_FILTER,
   buildAppetite,
   buildExportRows,
   buildBacklog,
@@ -40,7 +41,6 @@ import {
   buildInflowSeries,
   buildKpiRows,
   defaultInflowFilter,
-  withGlobalYear,
 } from "./committeeOverviewChartsData";
 import {
   CHART_TOOLTIP_PROPS,
@@ -105,16 +105,6 @@ const ICONS = {
   clock: clockIcon,
 };
 
-const QUARTER_PILL_OPTIONS = QUARTER_OPTIONS.map((quarter) => ({
-  label: `Q${quarter}`,
-  value: quarter,
-}));
-
-const YEAR_PILL_OPTIONS = YEAR_OPTIONS.map((year) => ({
-  label: String(year),
-  value: year,
-}));
-
 function KpiCard({ card, tone }) {
   const icon = ICONS[card.icon];
   return (
@@ -147,14 +137,14 @@ function CommitteeOverviewSection({ filter, rows, onFilterChange }) {
             placeholder="Filter Quarter"
             clearLabel="All Quarters"
             value={filter.quarter}
-            options={QUARTER_PILL_OPTIONS}
+            options={QUARTER_SELECT_OPTIONS}
             onChange={(quarter) => onFilterChange({ ...filter, quarter })}
           />
           <FilterPill
             icon={calendarIcon}
             placeholder="Filter Year"
             value={filter.year}
-            options={YEAR_PILL_OPTIONS}
+            options={YEAR_SELECT_OPTIONS}
             onChange={(year) =>
               onFilterChange({ ...filter, year: year ?? filter.year })
             }
