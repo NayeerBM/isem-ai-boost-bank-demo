@@ -1,0 +1,230 @@
+@use "../../styles/breakpoints" as bp;
+.trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.4px;
+
+  img {
+    margin: var(--space-1) 0;
+  }
+
+  &-up {
+    color: var(--color-danger);
+  }
+
+  &-down {
+    color: var(--color-success);
+  }
+}
+
+.overview {
+  padding: var(--space-5);
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 30px;
+    margin-bottom: var(--space-4);
+  }
+
+  &-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-2);
+  }
+
+  &-losses {
+    min-height: 98px;
+    margin-bottom: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+
+  &-losses-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &-info {
+    margin: 1.375px;
+    transform: rotate(180deg);
+    cursor: help;
+  }
+
+  &-losses-value {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: 18px;
+  }
+
+  &-kpis {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-4);
+
+    @media (max-width: bp.$laptop) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: bp.$mobile) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &-kpi {
+    display: flex;
+    flex-direction: column;
+    min-height: 132px;
+    padding: 15px 18px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+
+  &-kpi-value {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &-kpi-label {
+    min-height: 18px;
+  }
+
+  &-kpi-description {
+    margin: 18px 0 0;
+    white-space: pre-line;
+  }
+}
+
+.dark-tooltip {
+  max-width: none;
+
+  .ant-tooltip-inner {
+    min-height: 0;
+    padding: var(--space-2) 10px;
+    border-radius: var(--radius-tooltip);
+    background: var(--color-tooltip);
+    font-size: var(--font-size-caption);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+  }
+
+  .ant-tooltip-arrow-content {
+    --antd-arrow-background-color: var(--color-tooltip);
+    background: var(--color-tooltip);
+  }
+}
+
+.trend-card {
+  min-height: 379px;
+}
+
+.trend-legend {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+
+  &-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  &-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+}
+
+.appetite {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+
+    @media (max-width: bp.$tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 98px;
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+
+  &-item-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-chip);
+  color: var(--color-on-dark);
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+
+  &-danger {
+    background: var(--color-danger);
+  }
+
+  &-success {
+    background: var(--color-success);
+  }
+}
+
+.page {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.board-overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 1158px;
+  margin: 0 auto;
+
+  &-charts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+
+    @media (max-width: bp.$tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

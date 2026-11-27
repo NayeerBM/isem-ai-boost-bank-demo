@@ -1,12 +1,12 @@
-import { seededNumber } from "../utils/seededRandom";
-import { formatRM } from "../utils/formatValue";
+import { seededNumber } from "../../utils/seededRandom";
+import { formatRM } from "../../utils/formatValue";
 
 import {
   buildPeriods,
   describeGlobalFilter,
   DURATION_SUMMARY,
   QUARTER_OPTIONS,
-} from "../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
+} from "../DashboardChartsFilterPopover/dashboardChartPeriods";
 
 function buildPoint(key, label, min, max, highlighted = false) {
   const fraudLoss = seededNumber(`loss-${key}`, min, max);

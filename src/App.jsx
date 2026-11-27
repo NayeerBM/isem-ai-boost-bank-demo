@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import AppLayout from "./AppLayout";
-import BoardOverviewPage from "./pages/BoardOverviewPage";
+import BoardOverviewCharts from "./Dashboard/BoardOverviewCharts/BoardOverviewCharts";
 import CommitteeOverviewPage from "./pages/CommitteeOverviewPage";
 
 const ROUTES = [
   {
     path: "#/board-overview",
     title: "Board Overview",
-    Page: BoardOverviewPage,
+    Page: BoardOverviewCharts,
   },
   {
     path: "#/committee-overview",
