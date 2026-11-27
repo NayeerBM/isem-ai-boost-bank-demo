@@ -1,6 +1,24 @@
 import { useEffect, useState } from "react";
 import AppLayout from "./components/layout/AppLayout";
-import { ROUTES, findRoute } from "./routes";
+import BoardOverviewPage from "./pages/BoardOverviewPage";
+import CommitteeOverviewPage from "./pages/CommitteeOverviewPage";
+
+const ROUTES = [
+  {
+    path: "#/board-overview",
+    title: "Board Overview",
+    Page: BoardOverviewPage,
+  },
+  {
+    path: "#/committee-overview",
+    title: "Committee Overview",
+    Page: CommitteeOverviewPage,
+  },
+];
+
+function findRoute(hash) {
+  return ROUTES.find((route) => route.path === hash) ?? ROUTES[0];
+}
 
 export default function App() {
   const [route, setRoute] = useState(() => findRoute(window.location.hash));

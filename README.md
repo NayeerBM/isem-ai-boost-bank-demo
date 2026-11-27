@@ -16,7 +16,7 @@ Open http://localhost:5173.
 | Board Overview     | http://localhost:5173/#/board-overview     |
 | Committee Overview | http://localhost:5173/#/committee-overview |
 
-The sidebar and header bar are not part of this build, so pages are switched by URL.
+Switch pages from the sidebar (Dashboard group) or by URL. The header shows only the logo, and the sidebar only has the Dashboard group with these two pages.
 
 ## Scripts
 
@@ -31,7 +31,8 @@ The sidebar and header bar are not part of this build, so pages are switched by 
 
 ```
 src/
-  App.jsx                          hash routes for the two pages
+  App.jsx                          hash routes for the two pages, wrapped in the layout
+  components/layout/               header (logo), sidebar (Dashboard group) and page layout
   pages/BoardOverviewPage.jsx      Board page layout and global Quarter/Year filter
   pages/boardOverviewData.js       Board dummy data, shared filter options and period builder
   pages/CommitteeOverviewPage.jsx  Committee page layout, filters and CSV export
