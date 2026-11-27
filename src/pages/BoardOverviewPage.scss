@@ -1,7 +1,7 @@
 @use "../styles/breakpoints" as bp;
 
 .page {
-  padding: var(--space-5);
+  padding: var(--space-4) var(--space-5) var(--space-5);
 }
 
 .board-overview {

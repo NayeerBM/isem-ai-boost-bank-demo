@@ -51,6 +51,7 @@ src/
 
 - Overview: Filter Quarter (Q1–Q4 or All Quarters) and Filter Year update the KPI cards, the risk appetite status and highlight the selected quarter in the bar charts.
 - Each chart has a filter popover: Duration (Quarterly, Yearly, Monthly, Weekly, Daily) with Year and Month where relevant. The bar charts also sort by value.
+- Export (top-right) downloads the data currently shown as CSV.
 
 ### Committee Overview
 

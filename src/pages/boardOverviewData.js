@@ -301,3 +301,55 @@ export function buildAppetite({ year, quarter }, kpis) {
     },
   ].map((item) => ({ ...item, tone: chipTone(item.status) }));
 }
+
+export function describeGlobalFilter({ year, quarter }) {
+  return quarter ? `Q${quarter} ${year}` : `${year} (All Quarters)`;
+}
+
+export function exportFileName(page, { year, quarter }) {
+  return `${page}-${quarter ? `${year}-Q${quarter}` : year}.csv`;
+}
+
+export function buildExportRows({
+  globalFilter,
+  kpis,
+  fraudLoss,
+  fraudPrevented,
+  trend,
+  appetite,
+}) {
+  const blank = [];
+  const barRows = (title, chart, metric) => [
+    [title, DURATION_SUMMARY[chart.filter.duration]],
+    ["Period", title],
+    ...chart.data.map((point) => [point.label, point[metric]]),
+  ];
+
+  return [
+    ["Board Overview", describeGlobalFilter(globalFilter)],
+    blank,
+    ["Overview", "Description", "Value"],
+    ["Fraud Losses", "", formatRM(kpis.fraudLossesAmount)],
+    ["Fraud Losses change (%)", "", kpis.fraudLossesChangePct],
+    ...buildKpiCards(kpis).map((card) => [
+      card.label ?? card.description,
+      card.label ? card.description.replace(/\n/g, " ") : "",
+      card.value,
+    ]),
+    blank,
+    ...barRows("Fraud Loss", fraudLoss, "fraudLoss"),
+    blank,
+    ...barRows("Fraud Prevented", fraudPrevented, "fraudPrevented"),
+    blank,
+    ["Financial Crime Risk Trends", DURATION_SUMMARY[trend.filter.duration]],
+    ["Period", "Fraud Loss", "Fraud Prevented"],
+    ...trend.data.map((point) => [
+      point.label,
+      point.fraudLoss,
+      point.fraudPrevented,
+    ]),
+    blank,
+    ["Financial Crime Risk Appetite Status", "Value", "Status"],
+    ...appetite.map((item) => [item.title, item.value, item.status]),
+  ];
+}

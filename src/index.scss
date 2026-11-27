@@ -123,6 +123,11 @@ body,
   letter-spacing: 0.2px;
 }
 
+.page-toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .icon-button {
   display: inline-flex;
   flex-shrink: 0;

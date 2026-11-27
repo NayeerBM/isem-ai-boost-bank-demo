@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -18,10 +17,6 @@ import {
   DURATION_SUMMARY,
   SORT_BADGE,
   buildAxis,
-  buildSeries,
-  defaultChartFilter,
-  sortSeries,
-  withGlobalYear,
 } from "../../pages/boardOverviewData";
 import {
   BAR_COLORS,
@@ -30,23 +25,15 @@ import {
   Y_AXIS_PROPS,
 } from "./chartTheme";
 
-export default function SummaryBarChart({ title, metric, globalFilter }) {
-  const [filter, setFilter] = useState(() => defaultChartFilter(globalFilter));
+export default function SummaryBarChart({
+  title,
+  metric,
+  filter: appliedFilter,
+  resetValue,
+  onFilterChange,
+  data,
+}) {
   const reducedMotion = usePrefersReducedMotion();
-
-  const appliedFilter = useMemo(
-    () => withGlobalYear(filter, globalFilter),
-    [filter, globalFilter],
-  );
-  const data = useMemo(
-    () =>
-      sortSeries(
-        buildSeries(appliedFilter, globalFilter),
-        metric,
-        appliedFilter.sort,
-      ),
-    [appliedFilter, globalFilter, metric],
-  );
 
   const axis = buildAxis(
     Math.max(...data.map((point) => point[metric])),
@@ -69,8 +56,8 @@ export default function SummaryBarChart({ title, metric, globalFilter }) {
       filter={
         <ChartFilterPopover
           value={appliedFilter}
-          resetValue={defaultChartFilter(globalFilter)}
-          onApply={setFilter}
+          resetValue={resetValue}
+          onApply={onFilterChange}
           showSort
           ariaLabel={`Filter ${title}`}
         />

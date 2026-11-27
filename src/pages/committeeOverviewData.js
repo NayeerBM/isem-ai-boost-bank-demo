@@ -5,6 +5,7 @@ import {
   buildAxis,
   buildPeriods,
   defaultChartFilter,
+  describeGlobalFilter,
 } from "./boardOverviewData";
 
 export { DEFAULT_GLOBAL_FILTER, withGlobalYear } from "./boardOverviewData";
@@ -310,10 +311,6 @@ export function buildTopRules(filter, globalFilter) {
     }));
   const axis = niceAxis(data[0].redFlags);
   return { period, data, axis, total };
-}
-
-function describeGlobalFilter({ year, quarter }) {
-  return quarter ? `Q${quarter} ${year}` : `${year} (All Quarters)`;
 }
 
 export function buildExportRows({

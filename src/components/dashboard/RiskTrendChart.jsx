@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react";
 import {
   CartesianGrid,
   Line,
@@ -13,12 +12,7 @@ import ChartFilterPopover from "./ChartFilterPopover";
 import ChartTooltip from "./ChartTooltip";
 import { useElementWidth } from "../../hooks/useElementWidth";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
-import {
-  buildAxis,
-  buildSeries,
-  defaultChartFilter,
-  withGlobalYear,
-} from "../../pages/boardOverviewData";
+import { buildAxis } from "../../pages/boardOverviewData";
 import {
   GRID_COLOR,
   LINE_SERIES,
@@ -29,19 +23,14 @@ import "./RiskTrendChart.scss";
 
 const QUARTER_PADDING_RATIO = 0.27;
 
-export default function RiskTrendChart({ globalFilter }) {
-  const [filter, setFilter] = useState(() => defaultChartFilter(globalFilter));
+export default function RiskTrendChart({
+  filter: appliedFilter,
+  resetValue,
+  onFilterChange,
+  data,
+}) {
   const { ref, width } = useElementWidth();
   const reducedMotion = usePrefersReducedMotion();
-
-  const appliedFilter = useMemo(
-    () => withGlobalYear(filter, globalFilter),
-    [filter, globalFilter],
-  );
-  const data = useMemo(
-    () => buildSeries(appliedFilter, globalFilter),
-    [appliedFilter, globalFilter],
-  );
 
   const axis = buildAxis(
     Math.max(
@@ -60,8 +49,8 @@ export default function RiskTrendChart({ globalFilter }) {
       filter={
         <ChartFilterPopover
           value={appliedFilter}
-          resetValue={defaultChartFilter(globalFilter)}
-          onApply={setFilter}
+          resetValue={resetValue}
+          onApply={onFilterChange}
           ariaLabel="Filter Financial Crime Risk Trends"
         />
       }

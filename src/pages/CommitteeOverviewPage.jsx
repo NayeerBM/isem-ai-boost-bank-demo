@@ -1,13 +1,12 @@
 import { useMemo, useState } from "react";
-import { Tooltip } from "antd";
+import ExportButton from "../components/dashboard/ExportButton";
 import CommitteeOverviewSection from "../components/committee/CommitteeOverviewSection";
 import InflowCompletionChart from "../components/committee/InflowCompletionChart";
 import BacklogChart from "../components/committee/BacklogChart";
 import TopRulesChart from "../components/committee/TopRulesChart";
 import ClientRiskAppetite from "../components/committee/ClientRiskAppetite";
-import shareIcon from "../assets/icons/share.svg";
 import { downloadCsv } from "../utils/downloadCsv";
-import { defaultChartFilter } from "./boardOverviewData";
+import { defaultChartFilter, exportFileName } from "./boardOverviewData";
 import {
   DEFAULT_GLOBAL_FILTER,
   buildAppetite,
@@ -65,11 +64,8 @@ export default function CommitteeOverviewPage() {
   const appetite = useMemo(() => buildAppetite(filter), [filter]);
 
   const handleExport = () => {
-    const period = filter.quarter
-      ? `${filter.year}-Q${filter.quarter}`
-      : String(filter.year);
     downloadCsv(
-      `committee-overview-${period}.csv`,
+      exportFileName("committee-overview", filter),
       buildExportRows({
         globalFilter: filter,
         kpiRows,
@@ -84,18 +80,7 @@ export default function CommitteeOverviewPage() {
   return (
     <main className="page">
       <div className="committee-overview">
-        <div className="committee-overview-toolbar">
-          <Tooltip title="Export CSV" placement="left">
-            <button
-              type="button"
-              className="icon-button"
-              onClick={handleExport}
-              aria-label="Export dashboard data as CSV"
-            >
-              <img src={shareIcon} alt="" width={20} height={20} />
-            </button>
-          </Tooltip>
-        </div>
+        <ExportButton onClick={handleExport} />
 
         <CommitteeOverviewSection
           filter={filter}
