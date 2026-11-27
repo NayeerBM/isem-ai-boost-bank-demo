@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AppLayout from "./AppLayout";
 import BoardOverviewCharts from "./Dashboard/BoardOverviewCharts/BoardOverviewCharts";
-import CommitteeOverviewPage from "./pages/CommitteeOverviewPage";
+import CommitteeOverviewCharts from "./Dashboard/CommitteeOverviewCharts/CommitteeOverviewCharts";
 
 const ROUTES = [
   {
@@ -12,7 +12,7 @@ const ROUTES = [
   {
     path: "#/committee-overview",
     title: "Committee Overview",
-    Page: CommitteeOverviewPage,
+    Page: CommitteeOverviewCharts,
   },
 ];
 

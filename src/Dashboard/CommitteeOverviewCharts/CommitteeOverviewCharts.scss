@@ -1,5 +1,4 @@
 @use "../../styles/breakpoints" as bp;
-
 .committee-overview-section {
   display: flex;
   flex-direction: column;
@@ -77,4 +76,72 @@
     mask-repeat: no-repeat;
     mask-size: 20px 20px;
   }
+}
+
+.inflow-card {
+  min-height: 379px;
+}
+
+.inflow-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+
+  &-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  &-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+}
+
+.rules-card {
+  min-height: 844px;
+
+  &-plot.chart-card-plot {
+    height: 742px;
+  }
+}
+
+.client-appetite {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+
+    @media (max-width: bp.$mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-height: 98px;
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+}
+
+.committee-overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 1158px;
+  margin: 0 auto;
 }

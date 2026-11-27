@@ -1,17 +1,17 @@
 import moment from "moment";
-import { seededNumber } from "../utils/seededRandom";
+import { seededNumber } from "../../utils/seededRandom";
 import {
   QUARTER_OPTIONS,
   buildAxis,
   buildPeriods,
   defaultChartFilter,
   describeGlobalFilter,
-} from "../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
+} from "../DashboardChartsFilterPopover/dashboardChartPeriods";
 
 export {
   DEFAULT_GLOBAL_FILTER,
   withGlobalYear,
-} from "../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
+} from "../DashboardChartsFilterPopover/dashboardChartPeriods";
 
 export const KPI_GROUPS = [
   {
