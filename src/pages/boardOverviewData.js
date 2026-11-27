@@ -20,7 +20,6 @@ export const DURATION_OPTIONS = [
   { label: "Yearly", value: "yearly" },
   { label: "Monthly", value: "monthly" },
   { label: "Weekly", value: "weekly" },
-  { label: "Daily", value: "daily" },
 ];
 
 export const DURATION_SUMMARY = {
@@ -28,7 +27,6 @@ export const DURATION_SUMMARY = {
   yearly: "Yearly Summary",
   monthly: "Monthly Summary",
   weekly: "Weekly Summary",
-  daily: "Daily Summary",
 };
 
 const AXIS_FLOOR = {
@@ -36,7 +34,6 @@ const AXIS_FLOOR = {
   yearly: 4,
   monthly: 4,
   weekly: 4,
-  daily: 4,
 };
 
 export const DEFAULT_GLOBAL_FILTER = { year: CURRENT_YEAR, quarter: null };
@@ -111,18 +108,6 @@ export function buildPeriods(filter, globalFilter) {
     );
   }
 
-  if (filter.duration === "daily") {
-    const today = moment().startOf("day");
-    return Array.from({ length: 14 }, (_, index) => {
-      const day = today.clone().subtract(13 - index, "days");
-      return {
-        key: `D${day.format("YYYY-MM-DD")}`,
-        label: day.format("DD MMM"),
-        highlighted: false,
-      };
-    });
-  }
-
   return QUARTER_OPTIONS.map((q) => ({
     key: `${globalYear}-Q${q}`,
     label: `Q${q}`,
@@ -135,7 +120,6 @@ const SERIES_RANGE = {
   quarterly: [22, 70],
   monthly: [6, 32],
   weekly: [1, 12],
-  daily: [0, 6],
 };
 
 export function buildSeries(filter, globalFilter) {

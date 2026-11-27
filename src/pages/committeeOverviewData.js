@@ -141,7 +141,6 @@ const INFLOW_RANGE = {
   quarterly: [300, 700],
   monthly: [100, 240],
   weekly: [25, 60],
-  daily: [3, 12],
 };
 
 export function defaultInflowFilter(globalFilter) {
@@ -173,7 +172,6 @@ export function buildInflowAxis(series, duration) {
 /* Snapshot charts: one period chosen by the chart filter */
 
 const PERIOD_SCALE = {
-  daily: 1 / 20,
   weekly: 1 / 4,
   monthly: 1,
   quarter: 3,
@@ -203,18 +201,10 @@ export function describePeriod(filter, globalFilter) {
       scale: "monthly",
     };
   }
-  if (filter.duration === "weekly") {
-    return {
-      key: `${filter.year}-M${filter.month}-W1`,
-      label: `W1 ${moment({ year: filter.year, month: filter.month }).format("MMM YYYY")}`,
-      scale: "weekly",
-    };
-  }
-  const today = moment();
   return {
-    key: `D${today.format("YYYY-MM-DD")}`,
-    label: today.format("DD MMM YYYY"),
-    scale: "daily",
+    key: `${filter.year}-M${filter.month}-W1`,
+    label: `W1 ${moment({ year: filter.year, month: filter.month }).format("MMM YYYY")}`,
+    scale: "weekly",
   };
 }
 
