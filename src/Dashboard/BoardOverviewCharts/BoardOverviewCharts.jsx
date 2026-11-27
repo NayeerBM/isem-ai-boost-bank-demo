@@ -39,6 +39,7 @@ import DashboardChartsFilterPopover, {
 } from "../DashboardChartsFilterPopover/DashboardChartsFilterPopover";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import {
+  CHART_TOOLTIP_PROPS,
   GRID_COLOR,
   X_AXIS_PROPS,
   Y_AXIS_PROPS,
@@ -78,26 +79,6 @@ function ChartCard({
       </header>
       {children}
     </section>
-  );
-}
-
-function ChartTooltip({ active, payload, label }) {
-  if (!active || !payload?.length) return null;
-
-  return (
-    <div className="chart-tooltip">
-      <div className="chart-tooltip-label">{label}</div>
-      {payload.map((entry) => (
-        <div key={entry.dataKey} className="chart-tooltip-row">
-          <span
-            className="chart-tooltip-dot"
-            style={{ background: entry.color ?? entry.payload?.fill }}
-          />
-          <span>{entry.name}</span>
-          <strong>{entry.value}</strong>
-        </div>
-      ))}
-    </div>
   );
 }
 
@@ -260,7 +241,7 @@ function SummaryBarChart({
             />
             <RechartsTooltip
               cursor={{ fill: "rgba(9, 40, 95, 0.04)" }}
-              content={<ChartTooltip />}
+              {...CHART_TOOLTIP_PROPS}
             />
             <Bar
               dataKey={metric}
@@ -332,7 +313,7 @@ function RiskTrendChart({ filter, resetValue, onFilterChange, data }) {
             />
             <RechartsTooltip
               cursor={{ stroke: GRID_COLOR }}
-              content={<ChartTooltip />}
+              {...CHART_TOOLTIP_PROPS}
             />
             {LINE_SERIES.map((series) => (
               <Line
