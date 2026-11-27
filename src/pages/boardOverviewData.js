@@ -85,46 +85,41 @@ function quarterOfMonth(month) {
   return Math.floor(month / 3) + 1;
 }
 
-function weeksInMonth(year, month) {
+export function weeksInMonth(year, month) {
   const start = moment({ year, month, day: 1 });
   return Math.ceil((start.daysInMonth() + start.isoWeekday() - 1) / 7);
 }
 
-export function buildSeries(filter, globalFilter) {
+export function buildPeriods(filter, globalFilter) {
   const { year: globalYear, quarter } = globalFilter;
 
   if (filter.duration === "yearly") {
-    return [...YEAR_OPTIONS]
-      .reverse()
-      .map((year) =>
-        buildPoint(`Y${year}`, String(year), 60, 260, year === globalYear),
-      );
+    return [...YEAR_OPTIONS].reverse().map((year) => ({
+      key: `Y${year}`,
+      label: String(year),
+      highlighted: year === globalYear,
+    }));
   }
 
   if (filter.duration === "monthly") {
-    return MONTH_OPTIONS.map(({ value }) =>
-      buildPoint(
-        `${filter.year}-M${value}`,
-        moment().month(value).format("MMM"),
-        6,
-        32,
+    return MONTH_OPTIONS.map(({ value }) => ({
+      key: `${filter.year}-M${value}`,
+      label: moment().month(value).format("MMM"),
+      highlighted:
         filter.year === globalYear &&
-          quarter !== null &&
-          quarterOfMonth(value) === quarter,
-      ),
-    );
+        quarter !== null &&
+        quarterOfMonth(value) === quarter,
+    }));
   }
 
   if (filter.duration === "weekly") {
     return Array.from(
       { length: weeksInMonth(filter.year, filter.month) },
-      (_, index) =>
-        buildPoint(
-          `${filter.year}-M${filter.month}-W${index + 1}`,
-          `W${index + 1}`,
-          1,
-          12,
-        ),
+      (_, index) => ({
+        key: `${filter.year}-M${filter.month}-W${index + 1}`,
+        label: `W${index + 1}`,
+        highlighted: false,
+      }),
     );
   }
 
@@ -132,17 +127,33 @@ export function buildSeries(filter, globalFilter) {
     const today = moment().startOf("day");
     return Array.from({ length: 14 }, (_, index) => {
       const day = today.clone().subtract(13 - index, "days");
-      return buildPoint(
-        `D${day.format("YYYY-MM-DD")}`,
-        day.format("DD MMM"),
-        0,
-        6,
-      );
+      return {
+        key: `D${day.format("YYYY-MM-DD")}`,
+        label: day.format("DD MMM"),
+        highlighted: false,
+      };
     });
   }
 
-  return QUARTER_OPTIONS.map((q) =>
-    buildPoint(`${globalYear}-Q${q}`, `Q${q}`, 22, 70, quarter === q),
+  return QUARTER_OPTIONS.map((q) => ({
+    key: `${globalYear}-Q${q}`,
+    label: `Q${q}`,
+    highlighted: quarter === q,
+  }));
+}
+
+const SERIES_RANGE = {
+  yearly: [60, 260],
+  quarterly: [22, 70],
+  monthly: [6, 32],
+  weekly: [1, 12],
+  daily: [0, 6],
+};
+
+export function buildSeries(filter, globalFilter) {
+  const [min, max] = SERIES_RANGE[filter.duration];
+  return buildPeriods(filter, globalFilter).map((period) =>
+    buildPoint(period.key, period.label, min, max, period.highlighted),
   );
 }
 
