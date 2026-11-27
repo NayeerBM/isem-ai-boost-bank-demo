@@ -1,7 +1,6 @@
 import { useState } from "react";
 import logo from "./assets/logo.svg";
-import homeIcon from "./assets/icons/home.svg";
-import chevronUp from "./assets/icons/chevron-up-white.svg";
+import { ChevronUp, Home } from "./assets/images/SVGLogo";
 import "./AppLayout.scss";
 
 function Sidebar({ routes, currentPath }) {
@@ -17,15 +16,11 @@ function Sidebar({ routes, currentPath }) {
         onClick={() => setOpen((value) => !value)}
       >
         <span className="sidebar-group-label">
-          <img src={homeIcon} alt="" width={20} height={20} />
+          <Home />
           Dashboard
         </span>
-        <img
+        <ChevronUp
           className={`sidebar-chevron${open ? "" : " sidebar-chevron-closed"}`}
-          src={chevronUp}
-          alt=""
-          width={14}
-          height={14}
         />
       </button>
 
