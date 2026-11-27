@@ -1,27 +1,13 @@
 import { useEffect, useState } from "react";
-import BoardOverviewPage from "./pages/BoardOverviewPage";
-import CommitteeOverviewPage from "./pages/CommitteeOverviewPage";
-
-const ROUTES = {
-  "#/board-overview": { title: "Board Overview", Page: BoardOverviewPage },
-  "#/committee-overview": {
-    title: "Committee Overview",
-    Page: CommitteeOverviewPage,
-  },
-};
-
-const DEFAULT_ROUTE = "#/board-overview";
-
-function currentRoute() {
-  return ROUTES[window.location.hash] ? window.location.hash : DEFAULT_ROUTE;
-}
+import AppLayout from "./components/layout/AppLayout";
+import { ROUTES, findRoute } from "./routes";
 
 export default function App() {
-  const [route, setRoute] = useState(currentRoute);
-  const { title, Page } = ROUTES[route];
+  const [route, setRoute] = useState(() => findRoute(window.location.hash));
+  const { title, Page } = route;
 
   useEffect(() => {
-    const handleHashChange = () => setRoute(currentRoute());
+    const handleHashChange = () => setRoute(findRoute(window.location.hash));
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
@@ -30,5 +16,9 @@ export default function App() {
     document.title = `iSEM.ai - ${title}`;
   }, [title]);
 
-  return <Page />;
+  return (
+    <AppLayout routes={ROUTES} currentPath={route.path}>
+      <Page />
+    </AppLayout>
+  );
 }
