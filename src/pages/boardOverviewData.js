@@ -23,17 +23,6 @@ export const DURATION_OPTIONS = [
   { label: "Daily", value: "daily" },
 ];
 
-export const SORT_OPTIONS = [
-  { label: "Default (by period)", value: "default" },
-  { label: "Highest to lowest", value: "desc" },
-  { label: "Lowest to highest", value: "asc" },
-];
-
-export const SORT_BADGE = {
-  desc: "Highest first",
-  asc: "Lowest first",
-};
-
 export const DURATION_SUMMARY = {
   quarterly: "Quarterly Summary",
   yearly: "Yearly Summary",
@@ -57,7 +46,6 @@ export function defaultChartFilter(globalFilter) {
     duration: "quarterly",
     year: globalFilter.year,
     month: moment().month(),
-    sort: "default",
   };
 }
 
@@ -155,12 +143,6 @@ export function buildSeries(filter, globalFilter) {
   return buildPeriods(filter, globalFilter).map((period) =>
     buildPoint(period.key, period.label, min, max, period.highlighted),
   );
-}
-
-export function sortSeries(series, metric, sort) {
-  if (sort === "default") return series;
-  const direction = sort === "desc" ? -1 : 1;
-  return [...series].sort((a, b) => (a[metric] - b[metric]) * direction);
 }
 
 export function buildAxis(maxValue, duration) {

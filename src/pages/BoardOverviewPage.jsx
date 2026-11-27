@@ -13,7 +13,6 @@ import {
   buildSeries,
   defaultChartFilter,
   exportFileName,
-  sortSeries,
   withGlobalYear,
 } from "./boardOverviewData";
 import "./BoardOverviewPage.scss";
@@ -26,14 +25,9 @@ function defaultChartFilters(globalFilter) {
   };
 }
 
-function buildBarChart(chartFilter, globalFilter, metric) {
+function buildChart(chartFilter, globalFilter) {
   const filter = withGlobalYear(chartFilter, globalFilter);
-  const data = sortSeries(
-    buildSeries(filter, globalFilter),
-    metric,
-    filter.sort,
-  );
-  return { filter, data };
+  return { filter, data: buildSeries(filter, globalFilter) };
 }
 
 export default function BoardOverviewPage() {
@@ -50,17 +44,17 @@ export default function BoardOverviewPage() {
   const appetite = useMemo(() => buildAppetite(filter, kpis), [filter, kpis]);
 
   const fraudLoss = useMemo(
-    () => buildBarChart(chartFilters.fraudLoss, filter, "fraudLoss"),
+    () => buildChart(chartFilters.fraudLoss, filter),
     [chartFilters.fraudLoss, filter],
   );
   const fraudPrevented = useMemo(
-    () => buildBarChart(chartFilters.fraudPrevented, filter, "fraudPrevented"),
+    () => buildChart(chartFilters.fraudPrevented, filter),
     [chartFilters.fraudPrevented, filter],
   );
-  const trend = useMemo(() => {
-    const applied = withGlobalYear(chartFilters.trend, filter);
-    return { filter: applied, data: buildSeries(applied, filter) };
-  }, [chartFilters.trend, filter]);
+  const trend = useMemo(
+    () => buildChart(chartFilters.trend, filter),
+    [chartFilters.trend, filter],
+  );
 
   const handleExport = () => {
     downloadCsv(

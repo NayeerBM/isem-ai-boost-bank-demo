@@ -11,13 +11,8 @@ import {
 import ChartCard from "./ChartCard";
 import ChartFilterPopover from "./ChartFilterPopover";
 import ChartTooltip from "./ChartTooltip";
-import SortIcon from "./SortIcon";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
-import {
-  DURATION_SUMMARY,
-  SORT_BADGE,
-  buildAxis,
-} from "../../pages/boardOverviewData";
+import { DURATION_SUMMARY, buildAxis } from "../../pages/boardOverviewData";
 import {
   BAR_COLORS,
   GRID_COLOR,
@@ -45,20 +40,11 @@ export default function SummaryBarChart({
     <ChartCard
       title={title}
       subtitle={DURATION_SUMMARY[filter.duration]}
-      badge={
-        SORT_BADGE[filter.sort] && (
-          <>
-            <SortIcon sort={filter.sort} />
-            {SORT_BADGE[filter.sort]}
-          </>
-        )
-      }
       filter={
         <ChartFilterPopover
           value={filter}
           resetValue={resetValue}
           onApply={onFilterChange}
-          showSort
           ariaLabel={`Filter ${title}`}
         />
       }

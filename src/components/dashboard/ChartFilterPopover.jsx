@@ -7,25 +7,13 @@ import chevronDown from "../../assets/icons/chevron-down.svg";
 import {
   DURATION_OPTIONS,
   MONTH_OPTIONS,
-  SORT_OPTIONS,
   YEAR_OPTIONS,
 } from "../../pages/boardOverviewData";
-import SortIcon from "./SortIcon";
 import "./ChartFilterPopover.scss";
 
 const YEAR_SELECT_OPTIONS = YEAR_OPTIONS.map((year) => ({
   label: String(year),
   value: year,
-}));
-
-const SORT_SELECT_OPTIONS = SORT_OPTIONS.map((option) => ({
-  value: option.value,
-  label: (
-    <span className="chart-filter-option">
-      <SortIcon sort={option.value} />
-      {option.label}
-    </span>
-  ),
 }));
 
 const STATISTICS_LABEL = {
@@ -51,7 +39,6 @@ export default function ChartFilterPopover({
   value,
   resetValue,
   onApply,
-  showSort = false,
   ariaLabel,
 }) {
   const [open, setOpen] = useState(false);
@@ -129,15 +116,6 @@ export default function ChartFilterPopover({
               )}
             </div>
           </div>
-        )}
-
-        {showSort && (
-          <FilterSelect
-            label="Sort"
-            value={draft.sort}
-            options={SORT_SELECT_OPTIONS}
-            onChange={(sort) => update({ sort })}
-          />
         )}
 
         <Button
