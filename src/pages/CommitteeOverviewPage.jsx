@@ -1,8 +1,11 @@
 import { useMemo, useState } from "react";
 import CommitteeOverviewSection from "../components/committee/CommitteeOverviewSection";
 import InflowCompletionChart from "../components/committee/InflowCompletionChart";
+import BacklogChart from "../components/committee/BacklogChart";
+import { defaultChartFilter } from "./boardOverviewData";
 import {
   DEFAULT_GLOBAL_FILTER,
+  buildBacklog,
   buildInflowAxis,
   buildInflowSeries,
   buildKpiRows,
@@ -14,6 +17,7 @@ import "./CommitteeOverviewPage.scss";
 function defaultChartFilters(globalFilter) {
   return {
     inflow: defaultInflowFilter(globalFilter),
+    backlog: defaultChartFilter(globalFilter),
   };
 }
 
@@ -39,6 +43,11 @@ export default function CommitteeOverviewPage() {
     };
   }, [chartFilters.inflow, filter]);
 
+  const backlog = useMemo(() => {
+    const applied = withGlobalYear(chartFilters.backlog, filter);
+    return { filter: applied, ...buildBacklog(applied, filter) };
+  }, [chartFilters.backlog, filter]);
+
   return (
     <main className="page">
       <div className="committee-overview">
@@ -54,6 +63,15 @@ export default function CommitteeOverviewPage() {
           onFilterChange={setChartFilter("inflow")}
           data={inflow.data}
           axis={inflow.axis}
+        />
+
+        <BacklogChart
+          filter={backlog.filter}
+          resetValue={resetFilters.backlog}
+          onFilterChange={setChartFilter("backlog")}
+          period={backlog.period}
+          data={backlog.data}
+          axis={backlog.axis}
         />
       </div>
     </main>

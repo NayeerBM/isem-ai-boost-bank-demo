@@ -171,7 +171,7 @@ export function buildInflowAxis(series, duration) {
 
 /* Snapshot charts: one period chosen by the chart filter */
 
-const WINDOW_SCALE = {
+const PERIOD_SCALE = {
   daily: 1 / 20,
   weekly: 1 / 4,
   monthly: 1,
@@ -179,7 +179,7 @@ const WINDOW_SCALE = {
   year: 12,
 };
 
-export function describeWindow(filter, globalFilter) {
+export function describePeriod(filter, globalFilter) {
   const { year, quarter } = globalFilter;
   const month = moment().month();
 
@@ -217,11 +217,11 @@ export function describeWindow(filter, globalFilter) {
   };
 }
 
-function scaledValue(seed, window, [min, max]) {
-  const scale = WINDOW_SCALE[window.scale];
+function scaledValue(seed, period, [min, max]) {
+  const scale = PERIOD_SCALE[period.scale];
   return Math.max(
     1,
-    Math.round(seededNumber(`${seed}-${window.key}`, min, max) * scale),
+    Math.round(seededNumber(`${seed}-${period.key}`, min, max) * scale),
   );
 }
 
@@ -234,16 +234,16 @@ export const BACKLOG_BUCKETS = [
 ];
 
 export function buildBacklog(filter, globalFilter) {
-  const window = describeWindow(filter, globalFilter);
+  const period = describePeriod(filter, globalFilter);
   const data = BACKLOG_BUCKETS.map((bucket) => ({
     ...bucket,
-    cases: scaledValue(`backlog-${bucket.key}`, window, [8, 30]),
+    cases: scaledValue(`backlog-${bucket.key}`, period, [8, 30]),
   }));
   const axis = buildAxis(
     Math.max(...data.map((point) => point.cases)),
     "quarterly",
   );
-  return { window, data, axis };
+  return { period, data, axis };
 }
 
 export const RULE_COLORS = [
@@ -289,11 +289,11 @@ function niceAxis(maxValue) {
 }
 
 export function buildTopRules(filter, globalFilter) {
-  const window = describeWindow(filter, globalFilter);
+  const period = describePeriod(filter, globalFilter);
   const all = RULES.map((rule, index) => ({
     key: `rule-${index}`,
     rule,
-    redFlags: scaledValue(`rule-${index}`, window, [8, 42]),
+    redFlags: scaledValue(`rule-${index}`, period, [8, 42]),
   }));
   const total = all.reduce((sum, item) => sum + item.redFlags, 0);
   const data = [...all]
@@ -305,5 +305,5 @@ export function buildTopRules(filter, globalFilter) {
       share: Math.round((item.redFlags / total) * 1000) / 10,
     }));
   const axis = niceAxis(data[0].redFlags);
-  return { window, data, axis, total };
+  return { period, data, axis, total };
 }
