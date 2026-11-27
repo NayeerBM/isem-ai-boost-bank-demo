@@ -2,10 +2,12 @@ import { useMemo, useState } from "react";
 import CommitteeOverviewSection from "../components/committee/CommitteeOverviewSection";
 import InflowCompletionChart from "../components/committee/InflowCompletionChart";
 import BacklogChart from "../components/committee/BacklogChart";
+import TopRulesChart from "../components/committee/TopRulesChart";
 import { defaultChartFilter } from "./boardOverviewData";
 import {
   DEFAULT_GLOBAL_FILTER,
   buildBacklog,
+  buildTopRules,
   buildInflowAxis,
   buildInflowSeries,
   buildKpiRows,
@@ -18,6 +20,7 @@ function defaultChartFilters(globalFilter) {
   return {
     inflow: defaultInflowFilter(globalFilter),
     backlog: defaultChartFilter(globalFilter),
+    rules: defaultChartFilter(globalFilter),
   };
 }
 
@@ -48,6 +51,11 @@ export default function CommitteeOverviewPage() {
     return { filter: applied, ...buildBacklog(applied, filter) };
   }, [chartFilters.backlog, filter]);
 
+  const rules = useMemo(() => {
+    const applied = withGlobalYear(chartFilters.rules, filter);
+    return { filter: applied, ...buildTopRules(applied, filter) };
+  }, [chartFilters.rules, filter]);
+
   return (
     <main className="page">
       <div className="committee-overview">
@@ -72,6 +80,15 @@ export default function CommitteeOverviewPage() {
           period={backlog.period}
           data={backlog.data}
           axis={backlog.axis}
+        />
+
+        <TopRulesChart
+          filter={rules.filter}
+          resetValue={resetFilters.rules}
+          onFilterChange={setChartFilter("rules")}
+          period={rules.period}
+          data={rules.data}
+          axis={rules.axis}
         />
       </div>
     </main>
