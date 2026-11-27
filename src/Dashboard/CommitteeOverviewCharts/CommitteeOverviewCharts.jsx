@@ -1,10 +1,10 @@
-import { Tooltip } from "antd";
+// import { Tooltip } from "antd"; // Export is disabled for now
 import {
   QUARTER_SELECT_OPTIONS,
   YEAR_SELECT_OPTIONS,
   DEFAULT_GLOBAL_FILTER,
   defaultChartFilter,
-  exportFileName,
+  // exportFileName, // Export is disabled for now
   withGlobalYear,
 } from "../DashboardChartsFilterPopover/dashboardChartPeriods";
 import {
@@ -27,7 +27,7 @@ import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import {
   INFLOW_SERIES,
   buildAppetite,
-  buildExportRows,
+  // buildExportRows, // Export is disabled for now
   buildBacklog,
   buildTopRules,
   buildInflowAxis,
@@ -43,7 +43,7 @@ import {
   AXIS_TICK,
 } from "../../styles/chartTheme";
 import { useMemo, useState } from "react";
-import { downloadCsv } from "../../utils/downloadCsv";
+// import { downloadCsv } from "../../utils/downloadCsv"; // Export is disabled for now
 import {
   CalendarDates,
   CircleProgressQuarter,
@@ -51,7 +51,7 @@ import {
   Flag,
   FolderOpen,
   PlusCircleDotted,
-  Share,
+  // Share, // Export is disabled for now
   ShieldAlert,
 } from "../../assets/images/SVGLogo";
 import "./CommitteeOverviewCharts.scss";
@@ -81,22 +81,24 @@ function ChartCard({
   );
 }
 
-function ExportButton({ onClick }) {
-  return (
-    <div className="page-toolbar">
-      <Tooltip title="Export CSV" placement="left">
-        <button
-          type="button"
-          className="icon-button"
-          onClick={onClick}
-          aria-label="Export dashboard data as CSV"
-        >
-          <Share />
-        </button>
-      </Tooltip>
-    </div>
-  );
-}
+// Export is disabled for now. Uncomment this, handleExport and the
+// <ExportButton /> line below (plus the imports above) to enable it again.
+// function ExportButton({ onClick }) {
+//   return (
+//     <div className="page-toolbar">
+//       <Tooltip title="Export CSV" placement="left">
+//         <button
+//           type="button"
+//           className="icon-button"
+//           onClick={onClick}
+//           aria-label="Export dashboard data as CSV"
+//         >
+//           <Share />
+//         </button>
+//       </Tooltip>
+//     </div>
+//   );
+// }
 
 const ICONS = {
   flag: Flag,
@@ -528,24 +530,26 @@ export default function CommitteeOverviewCharts() {
 
   const appetite = useMemo(() => buildAppetite(filter), [filter]);
 
-  const handleExport = () => {
-    downloadCsv(
-      exportFileName("committee-overview", filter),
-      buildExportRows({
-        globalFilter: filter,
-        kpiRows,
-        inflow,
-        backlog,
-        rules,
-        appetite,
-      }),
-    );
-  };
+  // Export is disabled for now.
+  // const handleExport = () => {
+  //   downloadCsv(
+  //     exportFileName("committee-overview", filter),
+  //     buildExportRows({
+  //       globalFilter: filter,
+  //       kpiRows,
+  //       inflow,
+  //       backlog,
+  //       rules,
+  //       appetite,
+  //     }),
+  //   );
+  // };
 
   return (
     <main className="page">
       <div className="committee-overview">
-        <ExportButton onClick={handleExport} />
+        {/* Export is disabled for now. */}
+        {/* <ExportButton onClick={handleExport} /> */}
 
         <CommitteeOverviewSection
           filter={filter}

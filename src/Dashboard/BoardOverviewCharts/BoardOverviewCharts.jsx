@@ -3,7 +3,7 @@ import { formatRM } from "../../utils/formatValue";
 import {
   buildKpiCards,
   buildAppetite,
-  buildExportRows,
+  // buildExportRows, // Export is disabled for now
   buildKpis,
   buildSeries,
 } from "./boardOverviewChartsData";
@@ -14,7 +14,7 @@ import {
   buildAxis,
   DEFAULT_GLOBAL_FILTER,
   defaultChartFilter,
-  exportFileName,
+  // exportFileName, // Export is disabled for now
   withGlobalYear,
 } from "../DashboardChartsFilterPopover/dashboardChartPeriods";
 import {
@@ -41,14 +41,14 @@ import {
 } from "../../styles/chartTheme";
 import { useElementWidth } from "../../hooks/useElementWidth";
 import { useMemo, useState } from "react";
-import { downloadCsv } from "../../utils/downloadCsv";
+// import { downloadCsv } from "../../utils/downloadCsv"; // Export is disabled for now
 import {
   AlertCircle,
   ArrowDecrease,
   ArrowIncrease,
   CalendarDates,
   CircleProgressQuarter,
-  Share,
+  // Share, // Export is disabled for now
 } from "../../assets/images/SVGLogo";
 import "./BoardOverviewCharts.scss";
 
@@ -84,22 +84,24 @@ function ChartCard({
   );
 }
 
-function ExportButton({ onClick }) {
-  return (
-    <div className="page-toolbar">
-      <Tooltip title="Export CSV" placement="left">
-        <button
-          type="button"
-          className="icon-button"
-          onClick={onClick}
-          aria-label="Export dashboard data as CSV"
-        >
-          <Share />
-        </button>
-      </Tooltip>
-    </div>
-  );
-}
+// Export is disabled for now. Uncomment this, handleExport and the
+// <ExportButton /> line below (plus the imports above) to enable it again.
+// function ExportButton({ onClick }) {
+//   return (
+//     <div className="page-toolbar">
+//       <Tooltip title="Export CSV" placement="left">
+//         <button
+//           type="button"
+//           className="icon-button"
+//           onClick={onClick}
+//           aria-label="Export dashboard data as CSV"
+//         >
+//           <Share />
+//         </button>
+//       </Tooltip>
+//     </div>
+//   );
+// }
 
 function TrendBadge({ value, suffix = "" }) {
   if (value === 0) return null;
@@ -398,24 +400,26 @@ export default function BoardOverviewCharts() {
     [chartFilters.trend, filter],
   );
 
-  const handleExport = () => {
-    downloadCsv(
-      exportFileName("board-overview", filter),
-      buildExportRows({
-        globalFilter: filter,
-        kpis,
-        fraudLoss,
-        fraudPrevented,
-        trend,
-        appetite,
-      }),
-    );
-  };
+  // Export is disabled for now.
+  // const handleExport = () => {
+  //   downloadCsv(
+  //     exportFileName("board-overview", filter),
+  //     buildExportRows({
+  //       globalFilter: filter,
+  //       kpis,
+  //       fraudLoss,
+  //       fraudPrevented,
+  //       trend,
+  //       appetite,
+  //     }),
+  //   );
+  // };
 
   return (
     <main className="page">
       <div className="board-overview">
-        <ExportButton onClick={handleExport} />
+        {/* Export is disabled for now. */}
+        {/* <ExportButton onClick={handleExport} /> */}
 
         <OverviewSection
           filter={filter}
