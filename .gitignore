@@ -22,3 +22,45 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Tests and coverage
+coverage
+*.lcov
+.nyc_output
+test-results
+playwright-report
+*.test.js
+*.test.jsx
+*.spec.js
+*.spec.jsx
+__tests__
+
+# AI agent files
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+GEMINI.md
+.cursor/
+.cursorrules
+.cursorignore
+.windsurf/
+.windsurfrules
+.aider*
+.codex/
+.continue/
+.copilot/
+.github/copilot-instructions.md
+.clinerules
+.roo/
+
+# Temp and OS junk
+*.tmp
+*.bak
+Thumbs.db
+desktop.ini
