@@ -31,17 +31,15 @@ Switch pages from the sidebar (Dashboard group) or by URL. The header shows only
 
 ```
 src/
-  App.jsx                          hash routes for the two pages, wrapped in the layout
-  components/layout/               header (logo), sidebar (Dashboard group), breadcrumb and page layout
-  pages/BoardOverviewPage.jsx      Board page layout and global Quarter/Year filter
-  pages/boardOverviewData.js       Board dummy data, shared filter options and period builder
-  pages/CommitteeOverviewPage.jsx  Committee page layout, filters and CSV export
-  pages/committeeOverviewData.js   Committee dummy data and export rows
-  components/dashboard/            Board sections and shared chart card, filter popover, tooltip
-  components/committee/            Committee KPI section, charts and client risk appetite
+  App.jsx                          hash routes for Board and Committee
+  AppLayout.jsx/.scss              shared header, sidebar and breadcrumb
+  Dashboard/
+    BoardOverviewCharts/           Board layout, chart JSX/SCSS, data and CSV rows
+    CommitteeOverviewCharts/       Committee layout, chart JSX/SCSS, data and CSV rows
+    DashboardChartsFilterPopover/  shared filter UI, options and period handling
   hooks/                           element width, reduced motion
-  utils/                           seeded random numbers, currency format, CSV download
-  styles/_breakpoints.scss         Sass breakpoints
+  utils/                           seeded random numbers, currency formatting, CSV download
+  styles/                          Sass breakpoints and Recharts axis styling
   index.scss                       design tokens and shared classes
 ```
 

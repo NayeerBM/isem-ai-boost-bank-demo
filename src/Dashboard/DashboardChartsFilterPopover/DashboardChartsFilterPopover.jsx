@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Popover, Select, Tooltip } from "antd";
+import { Button, Dropdown, Popover, Select, Tooltip } from "antd";
 import filterIcon from "../../assets/icons/filter.svg";
 import refreshIcon from "../../assets/icons/refresh.svg";
 import minusIcon from "../../assets/icons/minus.svg";
@@ -8,8 +8,9 @@ import {
   DURATION_OPTIONS,
   MONTH_OPTIONS,
   YEAR_OPTIONS,
-} from "../../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
-import "./ChartFilterPopover.scss";
+} from "./dashboardChartPeriods";
+import pillChevronDown from "../../assets/icons/chevron-down-light.svg";
+import "./DashboardChartsFilterPopover.scss";
 
 const YEAR_SELECT_OPTIONS = YEAR_OPTIONS.map((year) => ({
   label: String(year),
@@ -35,7 +36,7 @@ function FilterSelect({ label, large = false, ...props }) {
   );
 }
 
-export default function ChartFilterPopover({
+export default function DashboardChartsFilterPopover({
   value,
   resetValue,
   onApply,
@@ -143,5 +144,56 @@ export default function ChartFilterPopover({
         <img src={filterIcon} alt="" width={20} height={20} />
       </button>
     </Popover>
+  );
+}
+
+const CLEAR_KEY = "all";
+
+export function FilterPill({
+  icon,
+  placeholder,
+  value,
+  options,
+  onChange,
+  clearLabel,
+}) {
+  const selected = options.find((option) => option.value === value);
+
+  const items = [
+    ...(clearLabel ? [{ key: CLEAR_KEY, label: clearLabel }] : []),
+    ...options.map((option) => ({
+      key: String(option.value),
+      label: option.label,
+    })),
+  ];
+
+  const handleClick = ({ key }) => {
+    const option = options.find((item) => String(item.value) === key);
+    onChange(option ? option.value : null);
+  };
+
+  return (
+    <Dropdown
+      menu={{
+        items,
+        selectable: true,
+        selectedKeys: [value === null ? CLEAR_KEY : String(value)],
+        onClick: handleClick,
+      }}
+      trigger={["click"]}
+      placement="bottomRight"
+      overlayClassName="filter-pill-menu"
+    >
+      <button
+        type="button"
+        className={`filter-pill${selected ? " filter-pill-active" : ""}`}
+      >
+        <img src={icon} alt="" width={20} height={20} />
+        <span className="filter-pill-text">
+          {selected ? selected.label : placeholder}
+        </span>
+        <img src={pillChevronDown} alt="" width={20} height={20} />
+      </button>
+    </Dropdown>
   );
 }

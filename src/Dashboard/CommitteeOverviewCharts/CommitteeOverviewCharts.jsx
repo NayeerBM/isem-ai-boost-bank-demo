@@ -1,5 +1,4 @@
 import { Tooltip } from "antd";
-import FilterPill from "../../components/dashboard/FilterPill";
 import quarterIcon from "../../assets/icons/circle-progress-quarter.svg";
 import calendarIcon from "../../assets/icons/calendar-dates.svg";
 import flagIcon from "../../assets/icons/flag.svg";
@@ -25,7 +24,9 @@ import {
   BarChart,
   Cell,
 } from "recharts";
-import ChartFilterPopover from "../../components/dashboard/ChartFilterPopover";
+import DashboardChartsFilterPopover, {
+  FilterPill,
+} from "../DashboardChartsFilterPopover/DashboardChartsFilterPopover";
 import { useElementWidth } from "../../hooks/useElementWidth";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import {
@@ -46,13 +47,11 @@ import {
   X_AXIS_PROPS,
   Y_AXIS_PROPS,
   AXIS_TICK,
-} from "../../components/dashboard/chartTheme";
+} from "../../styles/chartTheme";
 import { CalendarOutlined } from "@ant-design/icons";
 import { useMemo, useState } from "react";
 import { downloadCsv } from "../../utils/downloadCsv";
 import shareIcon from "../../assets/icons/share.svg";
-import "../../components/dashboard/ChartCard.scss";
-import "../../components/dashboard/ChartTooltip.scss";
 import "./CommitteeOverviewCharts.scss";
 
 function ChartCard({
@@ -217,7 +216,7 @@ function InflowCompletionChart({
       title="Red Flag Inflow vs Case Investigation Completion"
       subtitle="Productivity Summary"
       filter={
-        <ChartFilterPopover
+        <DashboardChartsFilterPopover
           value={filter}
           resetValue={resetValue}
           onApply={onFilterChange}
@@ -314,7 +313,7 @@ function BacklogChart({
         </>
       }
       filter={
-        <ChartFilterPopover
+        <DashboardChartsFilterPopover
           value={filter}
           resetValue={resetValue}
           onApply={onFilterChange}
@@ -438,7 +437,7 @@ function TopRulesChart({
         </>
       }
       filter={
-        <ChartFilterPopover
+        <DashboardChartsFilterPopover
           value={filter}
           resetValue={resetValue}
           onApply={onFilterChange}

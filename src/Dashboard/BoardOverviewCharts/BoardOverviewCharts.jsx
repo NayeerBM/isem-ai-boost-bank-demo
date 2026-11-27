@@ -1,7 +1,6 @@
 import arrowIncrease from "../../assets/icons/arrow-increase.svg";
 import arrowDecrease from "../../assets/icons/arrow-decrease.svg";
 import { Tooltip } from "antd";
-import FilterPill from "../../components/dashboard/FilterPill";
 import alertCircle from "../../assets/icons/alert-circle.svg";
 import quarterIcon from "../../assets/icons/circle-progress-quarter.svg";
 import calendarIcon from "../../assets/icons/calendar-dates.svg";
@@ -35,22 +34,27 @@ import {
   Line,
   LineChart,
 } from "recharts";
-import ChartFilterPopover from "../../components/dashboard/ChartFilterPopover";
+import DashboardChartsFilterPopover, {
+  FilterPill,
+} from "../DashboardChartsFilterPopover/DashboardChartsFilterPopover";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import {
-  BAR_COLORS,
   GRID_COLOR,
   X_AXIS_PROPS,
   Y_AXIS_PROPS,
-  LINE_SERIES,
-} from "../../components/dashboard/chartTheme";
+} from "../../styles/chartTheme";
 import { useElementWidth } from "../../hooks/useElementWidth";
 import { useMemo, useState } from "react";
 import { downloadCsv } from "../../utils/downloadCsv";
 import shareIcon from "../../assets/icons/share.svg";
-import "../../components/dashboard/ChartCard.scss";
-import "../../components/dashboard/ChartTooltip.scss";
 import "./BoardOverviewCharts.scss";
+
+const BAR_COLORS = ["#09285f", "#5273b0", "#8eabe0", "#d5e4ff"];
+
+const LINE_SERIES = [
+  { key: "fraudLoss", name: "Fraud Loss", color: "#e53935" },
+  { key: "fraudPrevented", name: "Fraud Prevented", color: "#1a7d71" },
+];
 
 function ChartCard({
   title,
@@ -233,7 +237,7 @@ function SummaryBarChart({
       title={title}
       subtitle={DURATION_SUMMARY[filter.duration]}
       filter={
-        <ChartFilterPopover
+        <DashboardChartsFilterPopover
           value={filter}
           resetValue={resetValue}
           onApply={onFilterChange}
@@ -302,7 +306,7 @@ function RiskTrendChart({ filter, resetValue, onFilterChange, data }) {
       title="Financial Crime Risk Trends"
       subtitle="Fraud Loss vs Fraud Prevented"
       filter={
-        <ChartFilterPopover
+        <DashboardChartsFilterPopover
           value={filter}
           resetValue={resetValue}
           onApply={onFilterChange}

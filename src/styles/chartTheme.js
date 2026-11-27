@@ -1,10 +1,3 @@
-export const BAR_COLORS = ["#09285f", "#5273b0", "#8eabe0", "#d5e4ff"];
-
-export const LINE_SERIES = [
-  { key: "fraudLoss", name: "Fraud Loss", color: "#e53935" },
-  { key: "fraudPrevented", name: "Fraud Prevented", color: "#1a7d71" },
-];
-
 export const GRID_COLOR = "#d9d9d9";
 
 export const AXIS_TICK = {
