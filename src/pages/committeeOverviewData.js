@@ -221,7 +221,11 @@ function scaledValue(seed, period, [min, max]) {
   const scale = PERIOD_SCALE[period.scale];
   return Math.max(
     1,
-    Math.round(seededNumber(`${seed}-${period.key}`, min, max) * scale),
+    seededNumber(
+      `${seed}-${period.key}`,
+      Math.round(min * scale),
+      Math.round(max * scale),
+    ),
   );
 }
 

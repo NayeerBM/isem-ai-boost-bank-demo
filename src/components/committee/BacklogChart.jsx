@@ -21,6 +21,7 @@ import {
 } from "../dashboard/chartTheme";
 
 const SIDE_PADDING_RATIO = 0.2;
+const NARROW_WIDTH = 700;
 
 export default function BacklogChart({
   filter,
@@ -32,7 +33,8 @@ export default function BacklogChart({
 }) {
   const { ref, width } = useElementWidth();
   const reducedMotion = usePrefersReducedMotion();
-  const sidePadding = Math.round(width * SIDE_PADDING_RATIO);
+  const sidePadding =
+    width >= NARROW_WIDTH ? Math.round(width * SIDE_PADDING_RATIO) : 8;
 
   return (
     <ChartCard
@@ -63,6 +65,9 @@ export default function BacklogChart({
             <XAxis
               {...X_AXIS_PROPS}
               padding={{ left: sidePadding, right: sidePadding }}
+              tickFormatter={(label) =>
+                width >= NARROW_WIDTH ? label : label.replace(" Days", "d")
+              }
             />
             <YAxis
               {...Y_AXIS_PROPS}

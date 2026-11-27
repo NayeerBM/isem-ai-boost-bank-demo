@@ -21,6 +21,7 @@ import {
 import "./InflowCompletionChart.scss";
 
 const FEW_POINTS_PADDING_RATIO = 0.28;
+const NARROW_WIDTH = 700;
 
 export default function InflowCompletionChart({
   filter,
@@ -32,7 +33,9 @@ export default function InflowCompletionChart({
   const { ref, width } = useElementWidth();
   const reducedMotion = usePrefersReducedMotion();
   const sidePadding =
-    data.length <= 5 ? Math.round(width * FEW_POINTS_PADDING_RATIO) : 24;
+    data.length <= 5 && width >= NARROW_WIDTH
+      ? Math.round(width * FEW_POINTS_PADDING_RATIO)
+      : 24;
   const hasHighlight = data.some((point) => point.highlighted);
 
   return (

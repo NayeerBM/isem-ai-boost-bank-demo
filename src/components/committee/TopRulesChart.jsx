@@ -12,6 +12,7 @@ import {
 import ChartCard from "../dashboard/ChartCard";
 import ChartFilterPopover from "../dashboard/ChartFilterPopover";
 import ChartTooltip from "../dashboard/ChartTooltip";
+import { useElementWidth } from "../../hooks/useElementWidth";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import { AXIS_TICK, GRID_COLOR } from "../dashboard/chartTheme";
 import "./TopRulesChart.scss";
@@ -20,6 +21,7 @@ const LABEL_WIDTH = 100;
 const LABEL_GAP = 21;
 const MAX_CHARS_PER_LINE = 15;
 const LINE_HEIGHT = 18;
+const NARROW_WIDTH = 640;
 
 function wrapLabel(text) {
   return text.split(" ").reduce((lines, word) => {
@@ -68,7 +70,12 @@ export default function TopRulesChart({
   axis,
 }) {
   const reducedMotion = usePrefersReducedMotion();
+  const { ref, width } = useElementWidth();
   const domain = [0, axis.max];
+  const ticks =
+    width && width < NARROW_WIDTH
+      ? axis.ticks.filter((_, index) => index % 2 === 0)
+      : axis.ticks;
 
   return (
     <ChartCard
@@ -90,7 +97,7 @@ export default function TopRulesChart({
         />
       }
     >
-      <div className="chart-card-plot rules-card-plot">
+      <div className="chart-card-plot rules-card-plot" ref={ref}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
@@ -107,7 +114,7 @@ export default function TopRulesChart({
               xAxisId="share"
               orientation="top"
               domain={domain}
-              ticks={axis.ticks}
+              ticks={ticks}
               tickFormatter={(value) =>
                 `${Math.round((value / axis.max) * 100)}%`
               }
@@ -116,7 +123,7 @@ export default function TopRulesChart({
               {...NUMBER_AXIS_PROPS}
               xAxisId="count"
               domain={domain}
-              ticks={axis.ticks}
+              ticks={ticks}
             />
             <YAxis
               type="category"

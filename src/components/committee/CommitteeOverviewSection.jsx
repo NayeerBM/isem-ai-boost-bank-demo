@@ -37,7 +37,10 @@ function KpiCard({ card, tone }) {
       {icon && (
         <span
           className="committee-kpi-icon"
-          style={{ maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` }}
+          style={{
+            maskImage: `url("${icon}")`,
+            WebkitMaskImage: `url("${icon}")`,
+          }}
           aria-hidden="true"
         />
       )}
