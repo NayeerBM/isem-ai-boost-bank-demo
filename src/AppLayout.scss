@@ -1,4 +1,49 @@
-@use "../../styles/breakpoints" as bp;
+@use "./styles/breakpoints" as bp;
+
+/* Page frame */
+
+.app-layout {
+  min-height: 100vh;
+
+  &-body {
+    display: flex;
+
+    @media (max-width: bp.$tablet) {
+      flex-direction: column;
+    }
+  }
+
+  &-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-breadcrumb {
+    max-width: calc(1158px + 2 * var(--space-5));
+    margin: 0 auto;
+    padding: var(--space-5) var(--space-5) 0;
+  }
+}
+
+/* Header (logo only) */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  padding: 0 30px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+
+  &-logo {
+    display: inline-flex;
+  }
+}
+
+/* Sidebar (Dashboard group only) */
 
 .sidebar {
   position: sticky;
@@ -91,5 +136,23 @@
       color: var(--color-text);
       font-weight: 700;
     }
+  }
+}
+
+/* Breadcrumb */
+
+.breadcrumb {
+  display: inline-block;
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.4px;
+
+  &-current {
+    color: var(--color-text);
   }
 }

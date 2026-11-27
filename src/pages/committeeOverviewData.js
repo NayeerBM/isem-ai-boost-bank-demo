@@ -6,9 +6,12 @@ import {
   buildPeriods,
   defaultChartFilter,
   describeGlobalFilter,
-} from "./boardOverviewData";
+} from "../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 
-export { DEFAULT_GLOBAL_FILTER, withGlobalYear } from "./boardOverviewData";
+export {
+  DEFAULT_GLOBAL_FILTER,
+  withGlobalYear,
+} from "../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 
 export const KPI_GROUPS = [
   {

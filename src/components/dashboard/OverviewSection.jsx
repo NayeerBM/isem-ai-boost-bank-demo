@@ -5,11 +5,11 @@ import alertCircle from "../../assets/icons/alert-circle.svg";
 import quarterIcon from "../../assets/icons/circle-progress-quarter.svg";
 import calendarIcon from "../../assets/icons/calendar-dates.svg";
 import { formatRM } from "../../utils/formatValue";
+import { buildKpiCards } from "../../pages/boardOverviewData";
 import {
   QUARTER_OPTIONS,
   YEAR_OPTIONS,
-  buildKpiCards,
-} from "../../pages/boardOverviewData";
+} from "../../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 import "./OverviewSection.scss";
 
 const QUARTER_PILL_OPTIONS = QUARTER_OPTIONS.map((quarter) => ({

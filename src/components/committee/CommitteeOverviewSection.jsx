@@ -6,7 +6,10 @@ import folderIcon from "../../assets/icons/folder-open.svg";
 import plusIcon from "../../assets/icons/plus-circle-dotted.svg";
 import shieldIcon from "../../assets/icons/shield-alert.svg";
 import clockIcon from "../../assets/icons/clock-alert.svg";
-import { QUARTER_OPTIONS, YEAR_OPTIONS } from "../../pages/boardOverviewData";
+import {
+  QUARTER_OPTIONS,
+  YEAR_OPTIONS,
+} from "../../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 import "./CommitteeOverviewSection.scss";
 
 const ICONS = {

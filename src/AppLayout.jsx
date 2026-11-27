@@ -1,9 +1,10 @@
 import { useState } from "react";
-import homeIcon from "../../assets/icons/home.svg";
-import chevronUp from "../../assets/icons/chevron-up-white.svg";
-import "./Sidebar.scss";
+import logo from "./assets/logo.svg";
+import homeIcon from "./assets/icons/home.svg";
+import chevronUp from "./assets/icons/chevron-up-white.svg";
+import "./AppLayout.scss";
 
-export default function Sidebar({ routes, currentPath }) {
+function Sidebar({ routes, currentPath }) {
   const [open, setOpen] = useState(true);
 
   return (
@@ -47,5 +48,38 @@ export default function Sidebar({ routes, currentPath }) {
         </ul>
       )}
     </nav>
+  );
+}
+
+export default function DashboardLayout({ routes, currentPath, children }) {
+  const current = routes.find((route) => route.path === currentPath);
+
+  return (
+    <div className="app-layout">
+      <header className="app-header">
+        <a
+          className="app-header-logo"
+          href={routes[0].path}
+          aria-label="iSEM.ai home"
+        >
+          <img src={logo} alt="iSEM.ai" width={115} height={18} />
+        </a>
+      </header>
+
+      <div className="app-layout-body">
+        <Sidebar routes={routes} currentPath={currentPath} />
+        <main className="app-layout-content">
+          <div className="app-layout-breadcrumb">
+            <nav className="breadcrumb" aria-label="Breadcrumb">
+              {"Dashboard > "}
+              <span className="breadcrumb-current" aria-current="page">
+                {current.title}
+              </span>
+            </nav>
+          </div>
+          {children}
+        </main>
+      </div>
+    </div>
   );
 }

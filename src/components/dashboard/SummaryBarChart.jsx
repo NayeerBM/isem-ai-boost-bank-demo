@@ -12,7 +12,10 @@ import ChartCard from "./ChartCard";
 import ChartFilterPopover from "./ChartFilterPopover";
 import ChartTooltip from "./ChartTooltip";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
-import { DURATION_SUMMARY, buildAxis } from "../../pages/boardOverviewData";
+import {
+  DURATION_SUMMARY,
+  buildAxis,
+} from "../../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 import {
   BAR_COLORS,
   GRID_COLOR,

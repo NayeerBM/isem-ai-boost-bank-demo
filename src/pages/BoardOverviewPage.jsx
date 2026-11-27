@@ -6,15 +6,17 @@ import RiskTrendChart from "../components/dashboard/RiskTrendChart";
 import RiskAppetiteStatus from "../components/dashboard/RiskAppetiteStatus";
 import { downloadCsv } from "../utils/downloadCsv";
 import {
-  DEFAULT_GLOBAL_FILTER,
   buildAppetite,
   buildExportRows,
   buildKpis,
   buildSeries,
+} from "./boardOverviewData";
+import {
+  DEFAULT_GLOBAL_FILTER,
   defaultChartFilter,
   exportFileName,
   withGlobalYear,
-} from "./boardOverviewData";
+} from "../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 import "./BoardOverviewPage.scss";
 
 function defaultChartFilters(globalFilter) {

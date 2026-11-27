@@ -8,7 +8,7 @@ import {
   DURATION_OPTIONS,
   MONTH_OPTIONS,
   YEAR_OPTIONS,
-} from "../../pages/boardOverviewData";
+} from "../../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 import "./ChartFilterPopover.scss";
 
 const YEAR_SELECT_OPTIONS = YEAR_OPTIONS.map((year) => ({

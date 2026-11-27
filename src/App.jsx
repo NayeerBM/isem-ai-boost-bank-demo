@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AppLayout from "./components/layout/AppLayout";
+import AppLayout from "./AppLayout";
 import BoardOverviewPage from "./pages/BoardOverviewPage";
 import CommitteeOverviewPage from "./pages/CommitteeOverviewPage";
 

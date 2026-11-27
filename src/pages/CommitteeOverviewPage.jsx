@@ -6,7 +6,10 @@ import BacklogChart from "../components/committee/BacklogChart";
 import TopRulesChart from "../components/committee/TopRulesChart";
 import ClientRiskAppetite from "../components/committee/ClientRiskAppetite";
 import { downloadCsv } from "../utils/downloadCsv";
-import { defaultChartFilter, exportFileName } from "./boardOverviewData";
+import {
+  defaultChartFilter,
+  exportFileName,
+} from "../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 import {
   DEFAULT_GLOBAL_FILTER,
   buildAppetite,

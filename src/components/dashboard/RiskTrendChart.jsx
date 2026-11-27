@@ -12,7 +12,7 @@ import ChartFilterPopover from "./ChartFilterPopover";
 import ChartTooltip from "./ChartTooltip";
 import { useElementWidth } from "../../hooks/useElementWidth";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
-import { buildAxis } from "../../pages/boardOverviewData";
+import { buildAxis } from "../../Dashboard/DashboardChartsFilterPopover/dashboardChartPeriods";
 import {
   GRID_COLOR,
   LINE_SERIES,
