@@ -307,3 +307,45 @@ export function buildTopRules(filter, globalFilter) {
   const axis = niceAxis(data[0].redFlags);
   return { period, data, axis, total };
 }
+
+function describeGlobalFilter({ year, quarter }) {
+  return quarter ? `Q${quarter} ${year}` : `${year} (All Quarters)`;
+}
+
+export function buildExportRows({
+  globalFilter,
+  kpiRows,
+  inflow,
+  backlog,
+  rules,
+  appetite,
+}) {
+  const blank = [];
+  return [
+    ["Committee Overview", describeGlobalFilter(globalFilter)],
+    blank,
+    ["Overview", "Metric", "Value"],
+    ...kpiRows.flatMap((row) =>
+      row.cards.map((card) => [card.caption, card.label, card.value]),
+    ),
+    blank,
+    ["Red Flag Inflow vs Case Investigation Completion"],
+    ["Period", "Red Flag Inflow", "Case Completion"],
+    ...inflow.data.map((point) => [
+      point.label,
+      point.inflow,
+      point.completion,
+    ]),
+    blank,
+    ["AML Investigation Backlogs", backlog.period.label],
+    ["Age", "Open Cases"],
+    ...backlog.data.map((point) => [point.label, point.cases]),
+    blank,
+    ["Top 10 Rules Generating Red Flags", rules.period.label],
+    ["Rule", "Red Flags", "Share of Red Flags (%)"],
+    ...rules.data.map((point) => [point.rule, point.redFlags, point.share]),
+    blank,
+    ["Client Risk Appetite"],
+    ...appetite.map((item) => [item.title, item.value]),
+  ];
+}
