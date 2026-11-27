@@ -1,11 +1,4 @@
 import { Tooltip } from "antd";
-import quarterIcon from "../../assets/icons/circle-progress-quarter.svg";
-import calendarIcon from "../../assets/icons/calendar-dates.svg";
-import flagIcon from "../../assets/icons/flag.svg";
-import folderIcon from "../../assets/icons/folder-open.svg";
-import plusIcon from "../../assets/icons/plus-circle-dotted.svg";
-import shieldIcon from "../../assets/icons/shield-alert.svg";
-import clockIcon from "../../assets/icons/clock-alert.svg";
 import {
   QUARTER_SELECT_OPTIONS,
   YEAR_SELECT_OPTIONS,
@@ -49,10 +42,18 @@ import {
   Y_AXIS_PROPS,
   AXIS_TICK,
 } from "../../styles/chartTheme";
-import { CalendarOutlined } from "@ant-design/icons";
 import { useMemo, useState } from "react";
 import { downloadCsv } from "../../utils/downloadCsv";
-import shareIcon from "../../assets/icons/share.svg";
+import {
+  CalendarDates,
+  CircleProgressQuarter,
+  ClockAlert,
+  Flag,
+  FolderOpen,
+  PlusCircleDotted,
+  Share,
+  ShieldAlert,
+} from "../../assets/images/SVGLogo";
 import "./CommitteeOverviewCharts.scss";
 
 function ChartCard({
@@ -90,7 +91,7 @@ function ExportButton({ onClick }) {
           onClick={onClick}
           aria-label="Export dashboard data as CSV"
         >
-          <img src={shareIcon} alt="" width={20} height={20} />
+          <Share />
         </button>
       </Tooltip>
     </div>
@@ -98,30 +99,21 @@ function ExportButton({ onClick }) {
 }
 
 const ICONS = {
-  flag: flagIcon,
-  folder: folderIcon,
-  plus: plusIcon,
-  shield: shieldIcon,
-  clock: clockIcon,
+  flag: Flag,
+  folder: FolderOpen,
+  plus: PlusCircleDotted,
+  shield: ShieldAlert,
+  clock: ClockAlert,
 };
 
 function KpiCard({ card, tone }) {
-  const icon = ICONS[card.icon];
+  const Icon = ICONS[card.icon];
   return (
     <article className={`committee-kpi committee-kpi-${card.tone ?? tone}`}>
       <span className="text-value">{card.value}</span>
       <span className="committee-kpi-label text-body">{card.label}</span>
       <span className="committee-kpi-caption text-caption">{card.caption}</span>
-      {icon && (
-        <span
-          className="committee-kpi-icon"
-          style={{
-            maskImage: `url("${icon}")`,
-            WebkitMaskImage: `url("${icon}")`,
-          }}
-          aria-hidden="true"
-        />
-      )}
+      {Icon && <Icon className="committee-kpi-icon" color="currentColor" />}
     </article>
   );
 }
@@ -133,7 +125,7 @@ function CommitteeOverviewSection({ filter, rows, onFilterChange }) {
         <h2 className="card-title">Overview</h2>
         <div className="committee-overview-section-filters">
           <FilterPill
-            icon={quarterIcon}
+            icon={<CircleProgressQuarter />}
             placeholder="Filter Quarter"
             clearLabel="All Quarters"
             value={filter.quarter}
@@ -141,7 +133,7 @@ function CommitteeOverviewSection({ filter, rows, onFilterChange }) {
             onChange={(quarter) => onFilterChange({ ...filter, quarter })}
           />
           <FilterPill
-            icon={calendarIcon}
+            icon={<CalendarDates />}
             placeholder="Filter Year"
             value={filter.year}
             options={YEAR_SELECT_OPTIONS}
@@ -279,7 +271,7 @@ function BacklogChart({
       subtitle="Cases Summary"
       badge={
         <>
-          <CalendarOutlined aria-hidden="true" />
+          <CalendarDates width={10} height={10} color="currentColor" />
           {period.label}
         </>
       }
@@ -403,7 +395,7 @@ function TopRulesChart({
       subtitle="Rules Summary"
       badge={
         <>
-          <CalendarOutlined aria-hidden="true" />
+          <CalendarDates width={10} height={10} color="currentColor" />
           {period.label}
         </>
       }

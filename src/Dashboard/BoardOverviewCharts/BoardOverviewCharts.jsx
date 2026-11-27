@@ -1,9 +1,4 @@
-import arrowIncrease from "../../assets/icons/arrow-increase.svg";
-import arrowDecrease from "../../assets/icons/arrow-decrease.svg";
 import { Tooltip } from "antd";
-import alertCircle from "../../assets/icons/alert-circle.svg";
-import quarterIcon from "../../assets/icons/circle-progress-quarter.svg";
-import calendarIcon from "../../assets/icons/calendar-dates.svg";
 import { formatRM } from "../../utils/formatValue";
 import {
   buildKpiCards,
@@ -47,7 +42,14 @@ import {
 import { useElementWidth } from "../../hooks/useElementWidth";
 import { useMemo, useState } from "react";
 import { downloadCsv } from "../../utils/downloadCsv";
-import shareIcon from "../../assets/icons/share.svg";
+import {
+  AlertCircle,
+  ArrowDecrease,
+  ArrowIncrease,
+  CalendarDates,
+  CircleProgressQuarter,
+  Share,
+} from "../../assets/images/SVGLogo";
 import "./BoardOverviewCharts.scss";
 
 const BAR_COLORS = ["#09285f", "#5273b0", "#8eabe0", "#d5e4ff"];
@@ -92,7 +94,7 @@ function ExportButton({ onClick }) {
           onClick={onClick}
           aria-label="Export dashboard data as CSV"
         >
-          <img src={shareIcon} alt="" width={20} height={20} />
+          <Share />
         </button>
       </Tooltip>
     </div>
@@ -107,12 +109,11 @@ function TrendBadge({ value, suffix = "" }) {
     <span
       className={`trend-badge ${isUp ? "trend-badge-up" : "trend-badge-down"}`}
     >
-      <img
-        src={isUp ? arrowIncrease : arrowDecrease}
-        alt={isUp ? "Increase" : "Decrease"}
-        width={17.7143}
-        height={10}
-      />
+      {isUp ? (
+        <ArrowIncrease role="img" aria-hidden={false} aria-label="Increase" />
+      ) : (
+        <ArrowDecrease role="img" aria-hidden={false} aria-label="Decrease" />
+      )}
       {isUp ? "" : "-"}
       {Math.abs(value)}
       {suffix}
@@ -127,7 +128,7 @@ function OverviewSection({ filter, kpis, onFilterChange }) {
         <h2 className="card-title">Overview</h2>
         <div className="overview-filters">
           <FilterPill
-            icon={quarterIcon}
+            icon={<CircleProgressQuarter />}
             placeholder="Filter Quarter"
             clearLabel="All Quarters"
             value={filter.quarter}
@@ -135,7 +136,7 @@ function OverviewSection({ filter, kpis, onFilterChange }) {
             onChange={(quarter) => onFilterChange({ ...filter, quarter })}
           />
           <FilterPill
-            icon={calendarIcon}
+            icon={<CalendarDates />}
             placeholder="Filter Year"
             value={filter.year}
             options={YEAR_SELECT_OPTIONS}
@@ -154,12 +155,11 @@ function OverviewSection({ filter, kpis, onFilterChange }) {
             placement="top"
             overlayClassName="dark-tooltip"
           >
-            <img
+            <AlertCircle
               className="overview-info"
-              src={alertCircle}
-              alt="More information"
-              width={12.25}
-              height={12.25}
+              role="img"
+              aria-hidden={false}
+              aria-label="More information"
             />
           </Tooltip>
         </div>

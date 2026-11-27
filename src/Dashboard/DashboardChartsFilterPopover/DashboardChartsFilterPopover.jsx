@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Button, Dropdown, Popover, Select, Tooltip } from "antd";
-import filterIcon from "../../assets/icons/filter.svg";
-import refreshIcon from "../../assets/icons/refresh.svg";
-import minusIcon from "../../assets/icons/minus.svg";
-import chevronDown from "../../assets/icons/chevron-down.svg";
+import {
+  ChevronDown,
+  ChevronDownLight,
+  Filter,
+  Minus,
+  Refresh,
+} from "../../assets/images/SVGLogo";
 import {
   DURATION_OPTIONS,
   MONTH_OPTIONS,
   YEAR_SELECT_OPTIONS,
 } from "./dashboardChartPeriods";
-import pillChevronDown from "../../assets/icons/chevron-down-light.svg";
 import "./DashboardChartsFilterPopover.scss";
 
 const STATISTICS_LABEL = {
@@ -23,7 +25,7 @@ function FilterSelect({ label, large = false, ...props }) {
       <label className="chart-filter-label">{label}</label>
       <Select
         className={`chart-filter-select${large ? " chart-filter-select-lg" : ""}`}
-        suffixIcon={<img src={chevronDown} alt="" width={20} height={20} />}
+        suffixIcon={<ChevronDown />}
         getPopupContainer={(trigger) => trigger.parentElement}
         {...props}
       />
@@ -66,7 +68,7 @@ export default function DashboardChartsFilterPopover({
               onClick={() => setDraft(resetValue)}
               aria-label="Reset filters"
             >
-              <img src={refreshIcon} alt="" width={14} height={14} />
+              <Refresh />
             </button>
           </Tooltip>
           <Tooltip title="Close">
@@ -76,7 +78,7 @@ export default function DashboardChartsFilterPopover({
               onClick={() => setOpen(false)}
               aria-label="Close filters"
             >
-              <img src={minusIcon} alt="" width={14} height={14} />
+              <Minus />
             </button>
           </Tooltip>
         </div>
@@ -136,7 +138,7 @@ export default function DashboardChartsFilterPopover({
       destroyTooltipOnHide
     >
       <button type="button" className="icon-button" aria-label={ariaLabel}>
-        <img src={filterIcon} alt="" width={20} height={20} />
+        <Filter />
       </button>
     </Popover>
   );
@@ -183,11 +185,11 @@ export function FilterPill({
         type="button"
         className={`filter-pill${selected ? " filter-pill-active" : ""}`}
       >
-        <img src={icon} alt="" width={20} height={20} />
+        {icon}
         <span className="filter-pill-text">
           {selected ? selected.label : placeholder}
         </span>
-        <img src={pillChevronDown} alt="" width={20} height={20} />
+        <ChevronDownLight />
       </button>
     </Dropdown>
   );

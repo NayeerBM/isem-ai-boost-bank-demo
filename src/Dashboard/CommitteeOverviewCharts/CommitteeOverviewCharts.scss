@@ -70,11 +70,7 @@
     position: absolute;
     top: var(--space-5);
     right: var(--space-5);
-    width: 20px;
-    height: 20px;
-    background: var(--kpi-color);
-    mask-repeat: no-repeat;
-    mask-size: 20px 20px;
+    color: var(--kpi-color);
   }
 }
 
