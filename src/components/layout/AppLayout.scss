@@ -1,15 +1,18 @@
 @use "../../styles/breakpoints" as bp;
 
 .app-layout {
-  display: flex;
   min-height: 100vh;
+
+  &-body {
+    display: flex;
+
+    @media (max-width: bp.$tablet) {
+      flex-direction: column;
+    }
+  }
 
   &-content {
     flex: 1;
     min-width: 0;
-  }
-
-  @media (max-width: bp.$tablet) {
-    flex-direction: column;
   }
 }
