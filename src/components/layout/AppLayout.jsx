@@ -13,7 +13,7 @@ export default function AppLayout({ routes, currentPath, children }) {
         <Sidebar routes={routes} currentPath={currentPath} />
         <main className="app-layout-content">
           <div className="app-layout-breadcrumb">
-            <Breadcrumb items={["Dashboard", current.title]} />
+            <Breadcrumb section="Dashboard" page={current.title} />
           </div>
           {children}
         </main>

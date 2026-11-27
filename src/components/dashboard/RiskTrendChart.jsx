@@ -24,7 +24,7 @@ import "./RiskTrendChart.scss";
 const QUARTER_PADDING_RATIO = 0.27;
 
 export default function RiskTrendChart({
-  filter: appliedFilter,
+  filter,
   resetValue,
   onFilterChange,
   data,
@@ -36,7 +36,7 @@ export default function RiskTrendChart({
     Math.max(
       ...data.map((point) => Math.max(point.fraudLoss, point.fraudPrevented)),
     ),
-    appliedFilter.duration,
+    filter.duration,
   );
   const sidePadding =
     data.length <= 4 ? Math.round(width * QUARTER_PADDING_RATIO) : 24;
@@ -48,7 +48,7 @@ export default function RiskTrendChart({
       subtitle="Fraud Loss vs Fraud Prevented"
       filter={
         <ChartFilterPopover
-          value={appliedFilter}
+          value={filter}
           resetValue={resetValue}
           onApply={onFilterChange}
           ariaLabel="Filter Financial Crime Risk Trends"

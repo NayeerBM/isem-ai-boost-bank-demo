@@ -28,7 +28,7 @@ import {
 export default function SummaryBarChart({
   title,
   metric,
-  filter: appliedFilter,
+  filter,
   resetValue,
   onFilterChange,
   data,
@@ -37,25 +37,25 @@ export default function SummaryBarChart({
 
   const axis = buildAxis(
     Math.max(...data.map((point) => point[metric])),
-    appliedFilter.duration,
+    filter.duration,
   );
   const hasHighlight = data.some((point) => point.highlighted);
 
   return (
     <ChartCard
       title={title}
-      subtitle={DURATION_SUMMARY[appliedFilter.duration]}
+      subtitle={DURATION_SUMMARY[filter.duration]}
       badge={
-        SORT_BADGE[appliedFilter.sort] && (
+        SORT_BADGE[filter.sort] && (
           <>
-            <SortIcon sort={appliedFilter.sort} />
-            {SORT_BADGE[appliedFilter.sort]}
+            <SortIcon sort={filter.sort} />
+            {SORT_BADGE[filter.sort]}
           </>
         )
       }
       filter={
         <ChartFilterPopover
-          value={appliedFilter}
+          value={filter}
           resetValue={resetValue}
           onApply={onFilterChange}
           showSort
